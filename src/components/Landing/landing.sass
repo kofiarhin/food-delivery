@@ -1,0 +1,49 @@
+.landing
+    widht: 100%
+    height: 100vh
+    background:
+        image: url("/images/landing_bg.png")
+        size: "cover"
+        position: center
+    .main-header .container
+        .logo 
+            color: white
+            font:
+                size: 1.8rem
+        nav a
+            color: white
+        .menu
+            color: white
+
+
+    .form-wrapper
+        width: 500px
+        max-width: 100%
+        padding: 0rem 1rem
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        form
+            position: relative
+            .form-title
+                color: white
+                font:
+                    size: 4rem
+                    weight: 300
+                margin-bottom: 1.4rem
+                text-align: center
+            input
+                display: block
+                width: 100%
+                padding: 1rem 0rem
+                text-indent: 2rem
+                border-radius: 5rem
+                border: none
+                outline: none
+            
+
+
+@media(max-width: 540px)
+   .landing .form-wrapper form .form-title
+       font-size: 2.5rem
