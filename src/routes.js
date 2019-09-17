@@ -6,6 +6,7 @@ import Search from "./components/Search/search";
 import Login from "./components/Login/login";
 import Register from "./components/Register/register";
 import Dashboard from "./components/Dashboard/dashboard";
+import Logout from "./components/Logout/logout";
 
 
 const Routes = () => {
@@ -20,6 +21,7 @@ const Routes = () => {
             <Route path="/register" exact component={Register} />
             <Route path="/search" exact component={Search} />
             <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/logout" exact component={Logout} />
         </Switch>
 
     </Layout>

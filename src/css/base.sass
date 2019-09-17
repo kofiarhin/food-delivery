@@ -15,7 +15,6 @@ h1, h2, h3, h4, h5, p
 
 html, body
     font-family: 'Fira Sans', sans-serif
-    background: $lightBlue
 
 //general styling
 a
@@ -73,3 +72,27 @@ a
     padding: 0.8rem 0rem
     color: white
     font-size: 1.2rem
+
+.dashBoard-wrapper
+    display: flex
+    flex-wrap: wrap
+    width: 960px
+    max-width: 90%
+    margin: 0 auto
+    .dash-unit
+        width: 49%
+        margin: 1% 0.5%
+        text-align: center
+        padding: 8rem 0rem
+        background: orange
+        cursor: pointer
+        transition: all ease-in-out 300ms
+        &:hover
+            background: rgba(orange, 0.4)
+
+@media(max-width: 740px)
+    .dashBoard-wrapper
+        display: block
+        .dash-unit
+            width: 100%
+            margin-bottom: 1rem
