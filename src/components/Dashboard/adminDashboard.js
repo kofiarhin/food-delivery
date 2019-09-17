@@ -1,14 +1,15 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
 
 
     return <div className="dashBoard-wrapper">
 
-        <div className="dash-unit "> Customers </div>
-        <div className="dash-unit "> Restaurants</div>
-        <div className="dash-unit "> Riders</div>
-        <div className="dash-unit "> Orders </div>
+        <Link to="/customers" className="dash-unit "> Customers </Link>
+        <Link to="/restaurants" className="dash-unit "> Restaurants</Link>
+        <Link to="/riders" className="dash-unit "> Riders</Link>
+        <Link to="/orders" className="dash-unit "> Orders </Link>
 
 
     </div>

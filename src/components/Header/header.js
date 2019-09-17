@@ -16,7 +16,7 @@ const Header = () => {
             return <nav>
 
                 <Link to="/"> Home</Link>
-                <Link to="/register"> Profile</Link>
+                <Link to="/dashboard"> Dashboard</Link>
                 <Link to="/logout"> Logout</Link>
 
             </nav>

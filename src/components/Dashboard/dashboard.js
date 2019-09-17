@@ -70,7 +70,7 @@ class Dashboard extends Component {
                     return <div> Rider </div>
                     break;
                 case "admin":
-                    return <div> Admin  </div>
+                    return <AdminDashBoard />
                     break;
                 default:
                     return <div> You are not authorized to view this page </div>;
@@ -93,8 +93,8 @@ class Dashboard extends Component {
 
                 <h1 className="main-title"> Dashboard</h1>
 
-                {/* {this.renderDashboard()} */}
-                <AdminDashBoard userData={this.state.userData} />
+                {this.renderDashboard()}
+                {/* <AdminDashBoard userData={this.state.userData} /> */}
 
             </div>
 
