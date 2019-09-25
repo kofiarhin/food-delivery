@@ -1,6 +1,7 @@
 import React from "react";
 import Sidenav from "react-simple-sidenav";
 import SideNavItems from "./sideNavItems";
+import "./sidenav.sass";
 
 const Nav = (props) => {
 
