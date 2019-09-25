@@ -1,13 +1,18 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Sidenav from "./sidenav/sidenav";
 import "./header.sass";
+
 
 import Fontawesome from "react-fontawesome";
 
 
-const Header = () => {
+class Header extends Component {
 
-    const renderLinks = () => {
+    state = {
+        showNav: true
+    }
+    renderLinks = () => {
 
         const userId = sessionStorage.getItem('userId');
 
@@ -32,26 +37,36 @@ const Header = () => {
         }
     }
 
-    return <div>
+    render() {
+        return <div>
 
-        <header className="main-header">
+            <header className="main-header">
 
-            <div className="container">
+                <Sidenav
+                    showNav={this.state.showNav}
+                    onHideNav={() => this.setState({ showNav: false })}
+                />
 
-                <Link to="/"><h1 className="logo">DziDzi</h1> </Link>
+                <div className="container">
+
+                    <Link to="/"><h1 className="logo">DziDzi</h1> </Link>
+
+                    <Fontawesome name="bars" className="menu" onClick={() => this.setState({ showNav: true })} />
+
+                    <nav>
+                        {this.renderLinks()}
+                    </nav>
 
 
-                <Fontawesome name="bars" className="menu" />
+                </div>
+            </header>
 
-                <nav>
-                    {renderLinks()}
-                </nav>
+        </div>
+
+    }
 
 
-            </div>
-        </header>
 
-    </div>
 }
 
 export default Header;
