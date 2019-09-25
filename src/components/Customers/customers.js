@@ -1,27 +1,92 @@
-import React from "react";
+import React, { Component } from "react";
 import Header from "../Header/header";
+import { Link } from "react-router-dom";
+import { firebase, firebaseLooper } from "../../firebase";
+import _ from "lodash";
 
-const Customers = () => {
+class Customers extends Component {
 
 
-    return <div>
+    state = {
 
-        <Header />
+        users: []
+    }
 
-        <div className="container">
-            <h1 className="main-title"> List of Customers </h1>
 
-            <div className="user-unit-wrapper">
+    componentWillMount() {
 
-                <div className="user-unit">User 1</div>
-                <div className="user-unit">User 2</div>
-                <div className="user-unit">User 3</div>
-                <div className="user-unit">User 4</div>
+
+        //fetch list of customers
+        firebase.database().ref('users').once("value").then(snapshot => {
+
+            const users = firebaseLooper(snapshot);
+
+            if (users.length > 0) {
+
+                this.setState({
+                    users
+                })
+            }
+
+        })
+    }
+
+    renderUsers = () => {
+
+        const users = this.state.users;
+
+
+        if (!_.isEmpty(users)) {
+
+            return <div className="user-unit-wrapper">
+
+                {users.map((user) => {
+
+                    return <div className="user-unit">
+
+                        <div className="face"></div>
+
+                        <div className="content">
+                            <p className="name"> {user.name} </p>
+                            <p className="email"> {user.email}</p>
+                        </div>
+
+
+                    </div>
+                })}
 
             </div>
+        }
+
+
+    }
+    render() {
+
+
+        console.log(this.state);
+
+        return <div>
+
+            <Header />
+
+            <div className="container">
+
+
+                <div className="header-wrapper">
+                    <h1 className="main-title"> List of Customers </h1>
+                    <Link to="/add-customer">Add Customer</Link>
+                </div>
+
+                <div>
+
+                    {this.renderUsers()}
+                </div>
+            </div>
+
         </div>
 
-    </div>
+    }
+
 }
 
 export default Customers;
