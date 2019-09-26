@@ -79,7 +79,7 @@ class Login extends Component {
             //fetch user from database
             firebase.database().ref("users").orderByChild("email").equalTo(dataToSubmit.email).once("value").then(snapshot => {
 
-                const data = firebaseLooper(snapshot);
+                const data = firebaseLooper(snapshot)[0];
 
                 if (!_.isEmpty(data)) {
 
@@ -95,6 +95,7 @@ class Login extends Component {
 
                         //set session storage
                         sessionStorage.setItem("userId", data.id);
+                        sessionStorage.setItem("role", data.role);
                         this.props.history.push("/dashboard");
 
                     } else {

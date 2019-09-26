@@ -10,7 +10,7 @@ import Fontawesome from "react-fontawesome";
 class Header extends Component {
 
     state = {
-        showNav: true
+        showNav: false
     }
     renderLinks = () => {
 

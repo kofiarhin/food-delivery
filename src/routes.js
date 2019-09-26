@@ -13,6 +13,7 @@ import Customers from "./components/Customers/customers";
 import Customer from "./components/Customers/customer";
 import Riders from "./components/Riders/riders";
 import Orders from "./components/orders/orders";
+import User from "./components/User/user";
 
 
 
@@ -35,6 +36,7 @@ const Routes = () => {
             <Route path="/orders" exact component={Orders} />
             <Route path="/restaurants/:id" exact component={Restaurant} />
             <Route path="/customers/:id" exact component={Customer} />
+            <Route path="/user/profile" exact component={User} />
         </Switch>
 
     </Layout>
