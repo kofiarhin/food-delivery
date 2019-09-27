@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import Header from "../Header/header";
+import Header from "../../Header/header";
 import { Link } from "react-router-dom";
-import { firebase, firebaseLooper } from "../../firebase";
-import { defaultImage } from "../../config";
+import { firebase, firebaseLooper } from "../../../firebase";
+import { defaultImage } from "../../../config";
+import UserList from "../../widgets/user/userList";
 import _ from "lodash";
 
 class Customers extends Component {
@@ -63,28 +64,7 @@ class Customers extends Component {
 
         if (!_.isEmpty(users)) {
 
-            return <div className="user-unit-wrapper">
-
-                {users.map((user) => {
-
-                    return <Link to={`user/${user.id}`} className="user-unit">
-
-                        <div className="face" style={{
-                            backgroundImage: `url(${defaultImage})`
-                        }}></div>
-
-                        <div className="content">
-                            <p className="name">Name: {user.name} </p>
-                            <p className="email"> Email: {user.email}</p>
-                            <p className="contact"> Contact: {user.contact}</p>
-                            <p className="contact"> Role: {user.role}</p>
-                        </div>
-
-
-                    </Link>
-                })}
-
-            </div>
+            return <UserList users={this.state.users} />
         }
 
 

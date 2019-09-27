@@ -13,6 +13,7 @@ const userProfile = ({ user }) => {
             <p className="email">Email: {user.email}</p>
             <p className="contact">Contact: {user.contact}</p>
             <p className="location"> Address: {user.location} </p>
+            <p className="role"> Role: {user.role} </p>
 
         </div>
 

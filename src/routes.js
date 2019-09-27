@@ -9,11 +9,12 @@ import Dashboard from "./components/Dashboard/dashboard";
 import Logout from "./components/Logout/logout";
 import Restaurants from "./components/Restaurants/restaurants";
 import Restaurant from "./components/Restaurants/restaurant";
-import Customers from "./components/Customers/customers";
-import Customer from "./components/Customers/customer";
-import Riders from "./components/Riders/riders";
+import Customers from "./components/User/Customers/customers";
+import Customer from "./components/User/Customers/customer";
+import Riders from "./components/User/Riders/riders";
 import Orders from "./components/orders/orders";
 import User from "./components/User/user";
+import AddUser from "./components/User/addUser";
 
 
 
@@ -36,6 +37,7 @@ const Routes = () => {
             <Route path="/orders" exact component={Orders} />
             <Route path="/restaurants/:id" exact component={Restaurant} />
             <Route path="/customers/:id" exact component={Customer} />
+            <Route path="/user/add-user" exact component={AddUser} />
             <Route path="/user/:id" exact component={User} />
         </Switch>
 
