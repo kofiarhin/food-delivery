@@ -36,7 +36,7 @@ const Routes = () => {
             <Route path="/orders" exact component={Orders} />
             <Route path="/restaurants/:id" exact component={Restaurant} />
             <Route path="/customers/:id" exact component={Customer} />
-            <Route path="/user/profile" exact component={User} />
+            <Route path="/user/:id" exact component={User} />
         </Switch>
 
     </Layout>

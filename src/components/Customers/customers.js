@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "../Header/header";
 import { Link } from "react-router-dom";
 import { firebase, firebaseLooper } from "../../firebase";
+import { defaultImage } from "../../config";
 import _ from "lodash";
 
 class Customers extends Component {
@@ -13,7 +14,13 @@ class Customers extends Component {
     }
 
 
+
+
+
     componentWillMount() {
+
+        //authenticate user
+        this.auth();
 
 
         //fetch list of customers
@@ -21,14 +28,32 @@ class Customers extends Component {
 
             const users = firebaseLooper(snapshot);
 
+            const customers = users.filter(user => {
+
+                return user.role === "customer";
+            })
+
             if (users.length > 0) {
 
                 this.setState({
-                    users
+                    users: customers
                 })
             }
 
         })
+    }
+
+
+    auth = () => {
+
+        const userId = sessionStorage.getItem('userId');
+        const role = sessionStorage.getItem("role");
+
+        if (!userId || role !== "admin") {
+
+            this.props.history.push("/login")
+        }
+
     }
 
     renderUsers = () => {
@@ -42,17 +67,21 @@ class Customers extends Component {
 
                 {users.map((user) => {
 
-                    return <div className="user-unit">
+                    return <Link to={`user/${user.id}`} className="user-unit">
 
-                        <div className="face"></div>
+                        <div className="face" style={{
+                            backgroundImage: `url(${defaultImage})`
+                        }}></div>
 
                         <div className="content">
-                            <p className="name"> {user.name} </p>
-                            <p className="email"> {user.email}</p>
+                            <p className="name">Name: {user.name} </p>
+                            <p className="email"> Email: {user.email}</p>
+                            <p className="contact"> Contact: {user.contact}</p>
+                            <p className="contact"> Role: {user.role}</p>
                         </div>
 
 
-                    </div>
+                    </Link>
                 })}
 
             </div>
@@ -74,7 +103,7 @@ class Customers extends Component {
 
                 <div className="header-wrapper">
                     <h1 className="main-title"> List of Customers </h1>
-                    <Link to="/add-customer">Add Customer</Link>
+                    <Link to="/add-customer" className="cta">Add Customer</Link>
                 </div>
 
                 <div>

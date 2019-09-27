@@ -58,7 +58,6 @@ class Landing extends Component {
                 <form onSubmit={(event) => this.handleSubmit(event)}>
 
                     <h1 className="form-title"> Are you Hungry?</h1>
-                    <p className="slug">Delivering a bundle of happiness</p>
                     <input type="text" name="search" placeholder="Enter your location" onChange={this.handleChange} value={this.state.search.value} />
 
                 </form>

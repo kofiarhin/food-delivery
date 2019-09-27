@@ -71,13 +71,12 @@ const SideNavItems = () => {
 
         if (item.restricted) {
             //check if user is logged in
+
             if (sessionStorage.getItem("userId")) {
 
                 if (item.role) {
 
                     const role = sessionStorage.getItem("role");
-
-                    console.log(role);
 
                     return role === item.role ? <li className={item.type}>  <Link to={item.link}><FontAwesome name={item.icon} /> {item.text} </Link> </li> : null;
                     //check if userid matches role
@@ -85,7 +84,7 @@ const SideNavItems = () => {
                 } else {
 
 
-                    //check if user is logged in
+                    //chec k if user is logged in
 
                     return !userId ? <li className={item.type}>  <Link to={item.link}><FontAwesome name={item.icon} /> {item.text} </Link> </li> : null;
 

@@ -4,6 +4,7 @@
 //variables
 $blue: #64b2cd
 $lightBlue: #b9d2d2
+$pink: #382039
 *
     box-sizing: border-box
     margin: 0
@@ -96,39 +97,58 @@ ul
             background: rgba(orange, 0.4)
 
 
+
+
+.header-wrapper
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin-bottom: 2rem
+    .cta
+        display: block
+        background: $pink
+        color: white
+        padding: 1rem
+        text-align: center
+
+
+
 .user-unit-wrapper
     display: flex
+    flex-wrap: wrap
     .user-unit
-        padding: 3rem
+        width: 24%
+        margin: 1% 0.5%
+        background: $pink
+        display: inline-block
+        padding: 2rem 0rem
+        color: white
+        text-align: center
         .face
-            width: 150px
-            height: 150px
-            background: black
+            width: 120px
+            height: 120px
+            background:
+                size: cover
+                position: center
             margin: 0 auto 1rem
             border-radius: 50%
-        text-align: center
-        background: orange
-        width: 24%
-        margin: 0 0.5% 1% 0.5%
-        cursor: pointer
-        transition: all ease-in-out 300ms
-        &:hover
-            background: pink
-
-
-    // media querires
-@media(max-width: 740px)
-    .user-unit-wrapper
-        display: block
-        .user-unit
-            width: 80%
-            margin: 0 auto 1rem
-            .face
-                width: 100px
-                height: 100px
+        .content
+            p
                 margin-bottom: 0.5rem
-    .dashBoard-wrapper
+            
+
+
+
+
+@media(max-width: 840px)
+    .header-wrapper
         display: block
-        .dash-unit
-            width: 100%
-            margin-bottom: 1rem
+    .user-unit-wrapper
+        .user-unit
+            width: 49%
+
+@media(max-width: 400px)
+    .user-unit-wrapper
+        .user-unit
+            width: 70%
+            margin: 0 auto 2rem
