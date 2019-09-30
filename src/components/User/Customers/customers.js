@@ -83,7 +83,7 @@ class Customers extends Component {
 
                 <div className="header-wrapper">
                     <h1 className="main-title"> List of Customers </h1>
-                    <Link to="/add-customer" className="cta">Add Customer</Link>
+                    <Link to="/user/add-user" className="cta">Add Customer</Link>
                 </div>
 
                 <div>

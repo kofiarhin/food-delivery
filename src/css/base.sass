@@ -19,6 +19,9 @@ h1, h2, h3, h4, h5, p
 html, body
     font-family: 'Fira Sans', sans-serif
 
+body
+    padding-bottom: 8rem
+
 a
     color: black
     text-decoration: none
@@ -137,10 +140,39 @@ ul
                 margin-bottom: 0.5rem
             
 .form-wrapper
-    
+    width: 540px
+    max-width: 90%
+    margin: 0 auto
+    button
+        display: inline-block
+        padding:  1rem 0rem
+        width: 100%
+        background: $pink
+        color: white
+        outline: none
+        border: none
 
+    .form-element
+        margin-bottom: 1rem
+        label
+            display: block
+            margin-bottom: 1rem
 
+        input, select
+            width: 100%
+            padding: 0.8rem 0rem
+            text-indent: 1rem
+            font-size: 1.1rem
 
+.error
+    font-size: 1rem
+    color: red
+    text-align: center
+.info
+    color: green
+    font-size: 1.2rem
+    margin-bottom: 1rem
+    display: block
 @media(max-width: 840px)
     .header-wrapper
         display: block
