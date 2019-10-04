@@ -1,0 +1,35 @@
+.dash-wrapper
+    display: flex
+    flex-wrap: wrap
+    width: 960px
+    max-width: 90%
+    margin: 0 auto
+    .dash-unit
+        width: 32.33%
+        margin: 1% 0.5%
+        text-align: center
+        padding: 2rem 0rem
+        cursor: pointer
+        transition: all ease-in-out 300ms
+        .fas, .fa
+            font-size: 6rem
+            margin-bottom: 1rem
+        p
+            font-size: 1.4rem
+        &:hover
+            background: rgba(orange, 0.4)
+
+
+//media queries
+@media(max-width: 750px)
+    .dash-wrapper
+        .dash-unit
+            width: 49%
+
+//small screen
+@media(max-width: 400px)
+    .dash-wrapper
+        .dash-unit
+            width: 100%
+
+

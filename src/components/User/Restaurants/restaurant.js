@@ -1,8 +1,65 @@
-import React from "react";
+import React, { Component } from "react";
+import Header from "../../Header/header";
+import { firebase } from "../../../firebase";
+import "./rest.sass"
 
-const Restaurant = () => {
+class Restaurant extends Component {
 
-    return <div> List of restuarnats</div>
+
+    state = {
+
+        rest: null
+    }
+
+
+    componentWillMount() {
+
+        const id = this.props.match.params.id
+
+        //fetch restaurant
+        firebase.database().ref(`restaurants/${id}`).once("value").then(snapshot => {
+
+            const rest = snapshot.val();
+
+            if (rest) {
+
+                this.setState({
+                    rest
+                })
+            }
+        })
+    }
+
+
+
+    renderRest = () => {
+
+
+        const rest = this.state.rest;
+
+        return rest ?
+            <div className="rest-profile-wrapper">
+
+                <div className="avatar"></div>
+                <h1 className="rest-name">{rest.name}</h1>
+                <p className="location">Location: {rest.location}</p>
+            </div> : null;
+    }
+
+    render() {
+
+        return <div>
+
+            <Header />
+            <div className="container">
+
+                {this.renderRest()}
+
+            </div>
+
+        </div >
+    }
+
 }
 
 export default Restaurant;

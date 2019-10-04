@@ -14,13 +14,13 @@ class Header extends Component {
     }
     renderLinks = () => {
 
-        const userId = sessionStorage.getItem('userId');
+        const userId = sessionStorage.getItem('loginId');
 
         if (userId) {
 
             return <nav>
 
-                <Link to="/"> Home</Link>
+                <Link to="/restaurants"> Restaurants</Link>
                 <Link to="/dashboard"> Dashboard</Link>
                 <Link to="/logout"> Logout</Link>
 
@@ -28,7 +28,6 @@ class Header extends Component {
         } else {
 
             return <nav>
-
 
                 <Link to="/"> Home</Link>
                 <Link to="/login"> Login</Link>

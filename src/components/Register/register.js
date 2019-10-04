@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { firebase } from "../../firebase";
+import { firebase, firebaseLooper } from "../../firebase";
 
 
 
@@ -115,9 +115,44 @@ class Register extends Component {
 
                 isLoading: true
             })
-            firebase.database().ref("users").push(dataToSubmit).then(() => {
 
-                this.props.history.push("/login")
+
+            console.log(dataToSubmit);
+
+            //insert data to login table
+            // email, password, role
+            const loginData = {
+
+                email: dataToSubmit.email,
+                password: dataToSubmit.password,
+                role: dataToSubmit.role,
+                createdOn: dataToSubmit.createdOn
+            }
+
+            //insert data to login table
+            //get login id and store to useres table
+            //loginId, name, email, password, role, createdon
+            console.log(loginData);
+
+            firebase.database().ref('login').push(loginData).then(() => {
+
+                //fetch last insert id
+                firebase.database().ref('login').orderByChild("createdOn").limitToLast(1).once("value").then(snapshot => {
+
+                    const user = firebaseLooper(snapshot)[0];
+
+                    const loginId = user.id;
+
+                    dataToSubmit['loginId'] = loginId;
+
+                    firebase.database().ref('users').push(dataToSubmit).then(() => {
+
+                        sessionStorage.setItem("success", "Accont Successfully created");
+                        this.props.history.push("/login");
+
+                    });
+                })
+
             })
         }
 

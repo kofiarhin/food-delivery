@@ -101,10 +101,10 @@ class AddUser extends Component {
 
 
             dataToSubmit['createdOn'] = genDate();
+
             firebase.database().ref('users').push(dataToSubmit).then(() => {
 
-                //fetch list of users
-
+                //fetch list of user
 
                 firebase.database().ref('users').orderByChild("createdOn").limitToLast(1).once("value").then(snapshot => {
 

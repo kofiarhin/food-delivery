@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import Header from "../Header/header";
-
+import { genPassword, genDate } from "../../config";
+import { firebase, firebaseLooper } from '../../firebase';
+import { Link } from "react-router-dom";
 
 class AddRestaurant extends Component {
 
     state = {
+
+        errors: null,
+        newRest: null,
 
         formData: {
 
@@ -28,11 +33,6 @@ class AddRestaurant extends Component {
 
                 value: "",
                 required: true
-            },
-
-            delivery: {
-
-                value: ""
             }
 
         }
@@ -61,17 +61,117 @@ class AddRestaurant extends Component {
         event.preventDefault();
 
         let formData = this.state.formData;
+        let errors = [];
 
         let dataToSubmit = {}
 
         for (let key in formData) {
 
             dataToSubmit[key] = formData[key].value
+
+            //do some validation works
+            if (formData[key].required && formData[key].value === "") {
+                errors.push(`${key} is required`);
+
+            }
         }
 
-        console.log(dataToSubmit);
+        if (errors.length > 0) {
+
+            this.setState({
+
+                errors
+            })
+        } else {
+
+            //clear errors
+            this.setState({
+
+                errors: null
+            })
+
+
+            dataToSubmit['password'] = genPassword();
+            dataToSubmit['createdOn'] = genDate();
+
+            const loginData = {
+
+                email: dataToSubmit.email,
+                password: dataToSubmit.password,
+                role: "rest",
+                createdOn: genDate()
+            }
+
+            //insert dataToDatabase
+
+            firebase.database().ref('login').push(loginData).then(() => {
+
+                firebase.database().ref('login').orderByChild('email').equalTo(dataToSubmit.email).once("value").then(snapshot => {
+
+                    const loginId = firebaseLooper(snapshot)[0].id;
+
+                    dataToSubmit['loginId'] = loginId;
+
+                    firebase.database().ref('restaurants').push(dataToSubmit).then(snapshot => {
+
+                        sessionStorage.setItem('success', "account successfully created");
+                        this.props.history.push("/login")
+
+                    });
+
+                });
+
+            })
+            return;
+
+            //add data to database
+
+            firebase.database().ref('restaurants').push(dataToSubmit).then(() => {
+
+                //reset the form
+                // for (let key in formData) {
+                //     formData[key].value = ""
+                // }
+
+
+                //fetch list of restaurants
+
+                firebase.database().ref('restaurants').orderByChild('createdOn').limitToLast(1).once("value").then(snapshot => {
+
+                    const rest = firebaseLooper(snapshot)[0];
+
+                    const restId = rest.id;
+
+                    this.setState({
+
+                        newRest: restId
+                    })
+
+                });
+                this.setState({
+
+                    formData
+                })
+            });
+        }
     }
 
+
+    renderErrors = () => {
+
+        const errors = this.state.errors;
+
+        return errors ? errors.map(error => <p className="error"> {error} </p>) : null;
+    }
+
+
+    renderNewRest = () => {
+
+        const newRest = this.state.newRest;
+
+        return newRest ? <Link to={`/restaurant/${newRest}`} className="feedback"> Click Here  to view new Rest </Link> : null;
+
+    }
 
     render() {
 
@@ -135,11 +235,10 @@ class AddRestaurant extends Component {
 
                         </div>
 
-                        <div className="form-element">
+                        {/* <div className="form-element">
 
                             <label>Free Delivery? </label>
                             <select
-
                                 onChange={(event) => this.handleChange({ event, id: "delivery" })}
                             >
                                 <option value="">-- select option --</option>
@@ -147,8 +246,11 @@ class AddRestaurant extends Component {
                                 <option value="no">No</option>
                             </select>
 
-                        </div>
+                        </div> */}
 
+
+                        {this.renderErrors()}
+                        {this.renderNewRest()}
 
                         <button type="submit"> Create Account </button>
 

@@ -32,14 +32,14 @@ const Routes = () => {
             <Route path="/search" exact component={Search} />
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/logout" exact component={Logout} />
-            <Route path="/restaurants" exact component={Restaurants} />
-            <Route path="/customers" exact component={Customers} />
             <Route path="/riders" exact component={Riders} />
             <Route path="/orders" exact component={Orders} />
-            <Route path="/restaurants/:id" exact component={Restaurant} />
+            <Route path="/restaurants" exact component={Restaurants} />
+            <Route path="/customers" exact component={Customers} />
             <Route path="/customers/:id" exact component={Customer} />
+            <Route path="/restaurant/add-restaurant" exact component={AddRestaurant} />
+            <Route path="/restaurant/:id" exact component={Restaurant} />
             <Route path="/user/add-user" exact component={AddUser} />
-            <Route path="/user/add-restaurant" exact component={AddRestaurant} />
             <Route path="/user/:id" exact component={User} />
         </Switch>
 

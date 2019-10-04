@@ -59,8 +59,10 @@ class Login extends Component {
         }
 
 
+
         //check if there are any errors
         if (errors.length > 0) {
+
 
 
             //set the errors
@@ -76,51 +78,36 @@ class Login extends Component {
                 isLoading: true
             })
 
-            //fetch user from database
-            firebase.database().ref("users").orderByChild("email").equalTo(dataToSubmit.email).once("value").then(snapshot => {
-
-                const data = firebaseLooper(snapshot)[0];
-
-                if (!_.isEmpty(data)) {
-
-                    const password = data.password;
-
-                    //check if password match
-                    if (password === dataToSubmit.password) {
-
-                        this.setState({
-                            isLoading: false,
-                            errors: []
-                        });
-
-                        //set session storage
-                        sessionStorage.setItem("userId", data.id);
-                        sessionStorage.setItem("role", data.role);
-                        this.props.history.push("/dashboard");
-
-                    } else {
 
 
-                        errors.push("Invalid email/password  combination")
-                        this.setState({
-                            errors,
-                            isLoading: false
-                        });
+            firebase.database().ref("login").orderByChild("email").equalTo(dataToSubmit.email).once("value").then(snapshot => {
 
-                    }
+                const loginData = firebaseLooper(snapshot)[0];
 
+                //check if there is later and compare the password        
+                if (loginData && loginData.password === dataToSubmit.password) {
+
+
+                    //compare password
+                    sessionStorage.setItem("loginId", loginData.id);
+                    sessionStorage.setItem("role", loginData.role);
+                    this.props.history.push("/dashboard");
                 } else {
 
-                    errors.push("User not found");
+                    let errors = this.state.errors;
+
+                    errors.push("Invalid email/password combination");
                     this.setState({
 
-                        errors,
-                        isLoading: false
+                        isLoading: false,
+                        errors
                     })
-
                 }
-
             })
+
+            return
+            //fetch user from database
+
         }
 
     }

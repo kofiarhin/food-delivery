@@ -1,107 +1,59 @@
 import React, { Component } from "react";
+import RestDash from "./restDashboard";
+import AdminDash from "./adminDashboard";
 import Header from "../Header/header";
-import { firebase } from "../../firebase";
-import AdminDashBoard from "./adminDashboard";
-import _ from "lodash";
+import "./dashboard.sass"
 
-class Dashboard extends Component {
-
+class DashBoard extends Component {
 
 
     state = {
 
-        userData: []
+        role: null
     }
 
+    componentDidMount() {
 
-    componentWillMount() {
-
-
-
-
-        //check if session exist
-        //redirect user to login if not logged in
-        //fetch user details
-        //set state
-        //check role of user
-        //return user dashboard
-
-
-        const userId = sessionStorage.getItem("userId");
-        // console.log(userId);
-
-        if (!userId) {
-
-            this.props.history.push("/login")
-        }
-
-
-        //get users
-        firebase.database().ref(`users/${userId}`).once("value")
-            .then(snapshot => {
-
-                const userData = snapshot.val();
-
-                this.setState({
-
-                    userData
-                })
-
-
-            }).catch(error => console.log(error))
-
+        const loginId = sessionStorage.getItem("loginId");
+        const role = sessionStorage.getItem("role");
+        this.setState({
+            role
+        })
     }
 
+    renderDash = () => {
 
-    renderDashboard = () => {
+        const role = this.state.role;
 
-        const userData = this.state.userData;
-
-        if (!_.isEmpty(userData)) {
-
-            const role = userData.role
+        if (role) {
 
             switch (role) {
 
-                case "customer":
-                    return <div> Customer </div>
-                    break;
-                case "rider":
-                    return <div> Rider </div>
-                    break;
                 case "admin":
-                    return <AdminDashBoard />
+                    return <AdminDash {...this.props} />
+                    break;
+                case "rest":
+                    return <RestDash {...this.props} />
                     break;
                 default:
-                    return <div> You are not authorized to view this page </div>;
+                    return null;
             }
         }
 
+        return <div> Render Dassh </div>
 
     }
 
     render() {
 
-
-        // console.log(this.state.userData)
-
         return <div>
 
             <Header />
-
-            <div className="container">
-
-                <h1 className="main-title"> Dashboard</h1>
-
-                {this.renderDashboard()}
-                {/* <AdminDashBoard userData={this.state.userData} /> */}
-
-            </div>
-
+            <div>{this.renderDash()}</div>
         </div>
 
     }
-
 }
 
-export default Dashboard;
+
+export default DashBoard;

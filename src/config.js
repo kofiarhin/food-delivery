@@ -1,4 +1,5 @@
 import moment from "moment";
+import randomString from "randomstring";
 
 const genDate = () => {
 
@@ -7,28 +8,19 @@ const genDate = () => {
 }
 
 
-const auth = () => {
-
-    const userId = sessionStorage.getItem("userId");
-    const role = sessionStorage.getItem("role");
-
-    if (userId) {
-
-        return {
-            auth: true,
-            role
-        }
-    }
-}
-
-
-const redirect = (props, path) => {
-    props.history.push(path);
-}
-
 
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/1/1e/Default-avatar.jpg";
+const restDefaultImage = "https://doorservers.com/media/images/default_restaurant.png";
 
+const genPassword = () => {
 
+    const randString = randomString.generate({
+        length: 8,
+        charset: 'alphabetic'
+    })
 
-export { genDate, auth, redirect, defaultImage }
+    return randString;
+
+}
+
+export { genDate, defaultImage, restDefaultImage, genPassword }

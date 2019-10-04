@@ -1,0 +1,30 @@
+.rest-wrapper
+    display: flex
+    flex-wrap: wrap
+    .rest-unit
+        width: 24%
+        margin: 1% 0.5%
+        text-align: center
+        padding: 4rem 0rem
+        border: 1px solid rgba(black, 0.2 )
+        border-radius: 5px
+        .avatar
+            width: 80px
+            height: 80px
+            background:
+                size: cover
+                position: center
+            border-radius: 50%
+            margin: 0 auto 1rem
+
+@media(max-width: 750px)
+    .rest-wrapper
+        .rest-unit
+            width: 49%
+
+
+//small screen
+@media(max-width: 400px)
+    .rest-wrapper
+        .rest-unit
+            width: 100%

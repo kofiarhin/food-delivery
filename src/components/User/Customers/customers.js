@@ -21,7 +21,7 @@ class Customers extends Component {
     componentWillMount() {
 
         //authenticate user
-        this.auth();
+        // this.auth();
 
 
         //fetch list of customers
