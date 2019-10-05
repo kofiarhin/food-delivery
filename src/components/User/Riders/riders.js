@@ -50,7 +50,7 @@ class Riders extends Component {
 
             <div className="container">
 
-                <div className="header-wrapper"> <h1 className="main-title">List of  Customers</h1> <Link className="cta" to="/user/add-user">Add Rider</Link>  </div>
+                <div className="header-wrapper"> <h1 className="main-title">List of Riders</h1> <Link className="cta" to="/user/add-user">Add Rider</Link>  </div>
 
                 {this.renderUsers()}
 

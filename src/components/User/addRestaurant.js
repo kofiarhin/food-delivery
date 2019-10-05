@@ -115,7 +115,7 @@ class AddRestaurant extends Component {
                     firebase.database().ref('restaurants').push(dataToSubmit).then(snapshot => {
 
                         sessionStorage.setItem('success', "account successfully created");
-                        this.props.history.push("/login")
+                        this.props.history.push("/dashboard")
 
                     });
 

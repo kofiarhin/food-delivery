@@ -21,34 +21,51 @@ class Search extends Component {
         let params = new URLSearchParams(search);
         let query = params.get('q');
 
+        console.log(query);
 
-        if (query) {
+        firebase.database().ref("restaurants").orderByChild("location").once("value").then(snapshot => {
 
-            this.setState({
+            const rests = firebaseLooper(snapshot);
 
-                search: query
-            })
+            if (rests) {
+
+                this.setState({
+                    rests
+                })
+            }
+
+        })
 
 
-            firebase.database().ref('restaurants').orderByChild("location").equalTo("dansoman").once('value').then(snapshot => {
+        // if (query) {
 
-                const rests = firebaseLooper(snapshot);
+        //     // this.setState({
 
-                if (rests) {
+        //     //     search: query
+        //     // })
 
-                    this.setState({
 
-                        rests
-                    })
-                }
-            })
-        } else {
+        //     firebase.database().ref('restaurants').orderByChild("location").equalTo(`${query}`).once('value').then(snapshot => {
 
-            this.setState({
+        //         const rests = firebaseLooper(snapshot);
 
-                error: "Search cannot be empty"
-            })
-        }
+        //         console.log(rests);
+
+        //         if (rests) {
+
+        //             this.setState({
+
+        //                 rests
+        //             })
+        //         }
+        //     })
+        // } else {
+
+        //     this.setState({
+
+        //         error: "Search cannot be empty"
+        //     })
+        // }
 
 
 

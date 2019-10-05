@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "../../Header/header";
 import { firebase } from "../../../firebase";
-import "./rest.sass"
+import { restDefaultImage } from "../../../config";
 
 class Restaurant extends Component {
 
@@ -40,7 +40,12 @@ class Restaurant extends Component {
         return rest ?
             <div className="rest-profile-wrapper">
 
-                <div className="avatar"></div>
+                <div className="avatar"
+
+                    style={{
+                        backgroundImage: `url(${restDefaultImage})`
+                    }}
+                ></div>
                 <h1 className="rest-name">{rest.name}</h1>
                 <p className="location">Location: {rest.location}</p>
             </div> : null;

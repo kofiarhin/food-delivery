@@ -40,7 +40,7 @@ class DashBoard extends Component {
             }
         }
 
-        return <div> Render Dassh </div>
+
 
     }
 
@@ -49,7 +49,10 @@ class DashBoard extends Component {
         return <div>
 
             <Header />
-            <div>{this.renderDash()}</div>
+            <div>
+
+                {this.renderDash()}
+            </div>
         </div>
 
     }
