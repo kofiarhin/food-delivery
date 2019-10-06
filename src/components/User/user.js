@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Header from "../Header/header";
-import { defaultImage } from "../../config";
-import { firebase, firebaseLooper } from '../../firebase';
+import { firebase } from '../../firebase';
 import Userprofile from "../widgets/user/userProfile";
 import _ from "lodash";
 import "./user.sass";

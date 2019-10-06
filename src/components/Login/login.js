@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Header from "../Header/header";
 import { firebase, firebaseLooper } from "../../firebase";
-import _ from "lodash";
 
 class Login extends Component {
 

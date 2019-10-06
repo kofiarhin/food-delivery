@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Header from "../../Header/header";
 import { Link } from "react-router-dom";
 import { firebase, firebaseLooper } from "../../../firebase";
-import { defaultImage } from "../../../config";
 import UserList from "../../widgets/user/userList";
 import _ from "lodash";
 

@@ -14,7 +14,6 @@ class DashBoard extends Component {
 
     componentDidMount() {
 
-        const loginId = sessionStorage.getItem("loginId");
         const role = sessionStorage.getItem("role");
         this.setState({
             role
