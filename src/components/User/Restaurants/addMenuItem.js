@@ -66,11 +66,12 @@ class AddMenuItem extends Component {
         const restId = this.state.restId;
         let errors = [];
 
-
+        //grab data and perform some validation
         for (let key in formData) {
 
             dataToSubmit[key] = formData[key].value
 
+            //check if field is required and empty
             if (formData[key].required && formData[key].value === "") {
 
                 errors.push(`${key} is required`);
@@ -79,6 +80,7 @@ class AddMenuItem extends Component {
 
         }
 
+        //if errors set state of errors
         if (errors.length > 0) {
 
 
@@ -90,9 +92,14 @@ class AddMenuItem extends Component {
         } else {
 
 
+            //set rest id
+            dataToSubmit['restId'] = this.props.match.params.id;
 
-            //update  rest
+            firebase.database().ref("menus").push(dataToSubmit).then(() => {
 
+                sessionStorage.setItem("success", "item successfully added");
+                this.props.history.push("/dashboard");
+            })
 
 
         }
