@@ -169,9 +169,9 @@ class AddMenuItem extends Component {
 
                                 <option value="">-- Select Category</option>
                                 <option value="breakfast">Breakfast</option>
-                                <option value="breakfast">Lunch</option>
-                                <option value="breakfast">Dinner</option>
-                                <option value="breakfast">Dessert</option>
+                                <option value="lunch">Lunch</option>
+                                <option value="dinner">Dinner</option>
+                                <option value="desert">Dessert</option>
                             </select>
                         </div>
 
