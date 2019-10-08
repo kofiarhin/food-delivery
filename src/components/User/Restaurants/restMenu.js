@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { firebase, firebaseLooper } from "../../../firebase";
 import Header from "../../Header/header";
-import "./restMenu.sass"
+import "./restMenu.sass";
+import _ from "lodash";
+import { restDefaultImage } from "../../../config";
 
 class Menu extends Component {
 
@@ -9,7 +11,7 @@ class Menu extends Component {
     state = {
 
         menus: null,
-        restId: this.props.match.params.id
+        restData: null
     }
 
 
@@ -17,35 +19,46 @@ class Menu extends Component {
 
         const restId = this.props.match.params.id;
 
-        //get restaurant menu
+        //get restaurant
 
-        firebase.database().ref(`menus`).orderByChild("restId").equalTo(restId).once("value").then(snapshot => {
+        firebase.database().ref(`restaurants/${restId}`).once("value").then(snapshot => {
 
-            const menus = firebaseLooper(snapshot);
 
-            const data = menus.sort((a, b) => {
+            const restData = snapshot.val();
 
-                if (a.category > b.category) {
+            firebase.database().ref(`menus`).orderByChild("restId").equalTo(restId).once("value").then(snapshot => {
 
-                    return 1;
-                } else {
+                const menus = firebaseLooper(snapshot);
 
-                    return -1;
+                const data = menus.sort((a, b) => {
+
+                    if (a.category > b.category) {
+
+                        return 1;
+                    } else {
+
+                        return -1;
+                    }
+                })
+
+
+                // console.log(data);
+
+                //filter data
+
+                if (menus) {
+
+                    this.setState({
+                        menus: data,
+                        restData
+                    })
                 }
             })
-
-
-            // console.log(data);
-
-            //filter data
-
-            if (menus) {
-
-                this.setState({
-                    menus: data
-                })
-            }
         })
+
+        //get restaurant menu
+
+
 
     }
 
@@ -57,7 +70,8 @@ class Menu extends Component {
         let cat = [];
 
         //if menu items get categories
-        if (menus) {
+        // console.log(typeof menus)
+        if (!_.isEmpty(menus)) {
             menus.forEach(menu => {
                 cat.push(menu.category)
             });
@@ -76,6 +90,9 @@ class Menu extends Component {
             })
 
             return template;
+        } else {
+
+            return <div> <p className="feedback"> There are no menu items </p>  </div>
         }
     }
 
@@ -108,9 +125,22 @@ class Menu extends Component {
 
     render() {
 
+
+        console.log(this.state)
+
         return <div>
 
             <Header />
+
+            <div className="rest-profile-wrapper">
+
+                <div className="avatar" style={{
+                    backgroundImage: `url(${restDefaultImage})`
+                }}> </div>
+                <h1 className="rest-name"> Capitol Restaurant </h1>
+                <p className="location">Location: Airport </p>
+
+            </div>
 
             <div className="menu-wrapper">
                 {this.renderMenu()}

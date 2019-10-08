@@ -91,7 +91,7 @@ class AddRestaurant extends Component {
             })
 
 
-            dataToSubmit['password'] = genPassword();
+            dataToSubmit['password'] = "password"//genPassword();
             dataToSubmit['createdOn'] = genDate();
 
             const loginData = {

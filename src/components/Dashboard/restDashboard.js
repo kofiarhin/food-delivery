@@ -9,7 +9,8 @@ class RestDash extends Component {
     state = {
 
         role: null,
-        restId: null
+        restId: null,
+        restData: null
 
     }
 
@@ -42,7 +43,8 @@ class RestDash extends Component {
                     if (restId) {
 
                         this.setState({
-                            restId
+                            restId,
+                            restData
                         })
                     }
                 })
@@ -59,9 +61,12 @@ class RestDash extends Component {
     }
 
 
-    render() {
+    renderDash = () => {
 
-        return <div>
+        const restData = this.state.restData;
+
+        return restData ?
+
 
             <div className="dash-wrapper">
 
@@ -83,6 +88,30 @@ class RestDash extends Component {
                 </Link>
 
             </div>
+
+            : null;
+    }
+
+
+    renderName = () => {
+
+        const restData = this.state.restData;
+
+        return restData ? <h1 className="main-title text-center">  Welcome {restData.name}</h1> : null;
+    }
+
+
+    render() {
+
+
+        console.log(this.state);
+
+        return <div>
+
+
+            {this.renderName()}
+
+            {this.renderDash()}
 
         </div>
     }
