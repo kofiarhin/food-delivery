@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import Header from "../../Header/header";
-import { firebase } from "../../../firebase";
+import { firebase, firebaseLooper } from "../../../firebase";
 import { restDefaultImage } from "../../../config";
+import RestMenuTemplate from "../../widgets/user/restaurant/restMenuTemplate";
+import _ from "lodash";
+import { Link } from "react-router-dom";
 
 class Restaurant extends Component {
 
 
     state = {
 
-        rest: null
+        rest: null,
+        restMenu: null,
+        cart: []
     }
 
 
@@ -16,23 +21,50 @@ class Restaurant extends Component {
 
         const id = this.props.match.params.id
 
+        const cart = JSON.parse(sessionStorage.getItem("cart"));
+
+        if (cart) {
+
+            this.setState({
+                cart
+            })
+        }
+
+
+
         //fetch restaurant
         firebase.database().ref(`restaurants/${id}`).once("value").then(snapshot => {
 
-            const rest = snapshot.val();
+            const restData = { id: snapshot.key, ...snapshot.val() };
 
-            if (rest) {
+            if (restData) {
 
-                this.setState({
-                    rest
+
+
+
+                const restId = restData.id;
+
+                //get list of menu
+
+                firebase.database().ref(`menus`).orderByChild('restId').equalTo(restId).once("value").then(snapshot => {
+
+                    const restMenu = firebaseLooper(snapshot);
+
+                    this.setState({
+                        rest: restData,
+                        restMenu
+                    })
                 })
+
+
+
             }
         })
     }
 
 
 
-    renderRest = () => {
+    renderProfile = () => {
 
 
         const rest = this.state.rest;
@@ -51,14 +83,75 @@ class Restaurant extends Component {
             </div> : null;
     }
 
+
+
+    handleSubmit = (event) => {
+
+        event.preventDefault();
+        const cart = this.state.cart;
+
+        const cartData = {
+
+            itemId: event.target.item.value,
+            name: event.target.name.value,
+            price: parseInt(event.target.price.value)
+        }
+
+
+        if (!_.isEmpty(cartData)) {
+
+            cart.push(cartData);
+
+            const sessionData = JSON.stringify(cart);
+
+            sessionStorage.setItem("cart", sessionData);
+
+            this.setState({
+                cart
+            })
+        }
+    }
+
+
+    renderCart = () => {
+
+        const cart = this.state.cart;
+
+        if (cart) {
+
+            return <Link to={`/user/viewCart`}> <p className="feedback text-center"> You have  {cart.length} items  in cart </p></Link>
+        }
+    }
+
+
+    renderMenu = () => {
+
+
+        const menuData = this.state.restMenu;
+
+
+        if (!_.isEmpty(menuData)) {
+
+            return <RestMenuTemplate menuData={menuData} handleSubmit={(event) => this.handleSubmit(event)} />
+        }
+
+    }
+
     render() {
+
+        // console.log(this.state);
 
         return <div>
 
             <Header />
             <div className="container">
 
-                {this.renderRest()}
+                {/* {this.renderProfile()} */}
+
+                {this.renderCart()}
+                {this.renderMenu()}
+
+
 
             </div>
 

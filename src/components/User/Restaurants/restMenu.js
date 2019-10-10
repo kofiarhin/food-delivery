@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { firebase, firebaseLooper } from "../../../firebase";
 import Header from "../../Header/header";
-import "./restMenu.sass";
 import _ from "lodash";
 import { restDefaultImage } from "../../../config";
+import RestMenuTemplate from "../../widgets/user/restaurant/restMenuTemplate";
 
 class Menu extends Component {
 
@@ -11,7 +11,8 @@ class Menu extends Component {
     state = {
 
         menus: null,
-        restData: null
+        restData: null,
+        cart: []
     }
 
 
@@ -63,37 +64,51 @@ class Menu extends Component {
     }
 
 
+    handleSubmit = (event) => {
+
+        event.preventDefault();
+
+        const cart = this.state.cart;
+
+        const item = event.target.item.value;
+        let quantity = parseInt(event.target.quantity.value);
+        const price = parseInt(event.target.price.value);
+
+        if (!quantity) {
+
+            quantity = 1;
+        }
+
+        const itemCost = price * quantity;
+
+        const dataToSubmit = {
+            item,
+            quantity,
+            price,
+            itemCost
+        }
+
+        cart.push(dataToSubmit);
+
+        console.log(cart);
+
+
+
+
+
+    }
+
+
     renderMenu = () => {
 
         //get list of menu items
         const menus = this.state.menus;
         let cat = [];
 
-        //if menu items get categories
-        // console.log(typeof menus)
-        if (!_.isEmpty(menus)) {
-            menus.forEach(menu => {
-                cat.push(menu.category)
-            });
-            //get unique values of categories
-            cat = [... new Set(cat)];
 
-            //set template to null
-            let template = null;
+        return menus ? <RestMenuTemplate menuData={menus} handleSubmit={(event) => this.handleSubmit(event)} /> : null;
 
-            template = cat.map(item => {
-                return <div className="menu-unit">
-                    <h2> {item} </h2>
-                    {this.renderMenuItems(item)}
-                </div>
 
-            })
-
-            return template;
-        } else {
-
-            return <div> <p className="feedback"> There are no menu items </p>  </div>
-        }
     }
 
 
@@ -122,6 +137,23 @@ class Menu extends Component {
     }
 
 
+    renderProfile = () => {
+
+        const restData = this.state.restData;
+
+
+
+        return restData ? <div className="rest-profile-wrapper">
+
+            <div className="avatar" style={{
+                backgroundImage: `url(${restDefaultImage})`
+            }}> </div>
+            <h1 className="rest-name"> {restData.name} </h1>
+            <p className="location">Location: {restData.location} </p>
+
+        </div> : null;
+    }
+
 
     render() {
 
@@ -132,17 +164,10 @@ class Menu extends Component {
 
             <Header />
 
-            <div className="rest-profile-wrapper">
 
-                <div className="avatar" style={{
-                    backgroundImage: `url(${restDefaultImage})`
-                }}> </div>
-                <h1 className="rest-name"> Capitol Restaurant </h1>
-                <p className="location">Location: Airport </p>
+            {this.renderProfile()}
 
-            </div>
-
-            <div className="menu-wrapper">
+            <div>
                 {this.renderMenu()}
             </div>
         </div >
