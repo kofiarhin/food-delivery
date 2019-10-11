@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Header from "../../Header/header";
 import { firebase } from "../../../firebase";
+import Uploader from "../../widgets/Uploader/uploader";
+import { foodDefaultImage } from "../../../config";
 
 class AddMenuItem extends Component {
 
 
     state = {
 
-        restId: null,
+        restId: this.props.match.params.id,
         restData: null,
 
         formData: {
@@ -26,6 +28,14 @@ class AddMenuItem extends Component {
             category: {
                 required: true,
                 value: ""
+            },
+
+            cover: {
+                required: true,
+                value: {
+                    filename: "default",
+                    fileUrl: foodDefaultImage
+                }
             }
         }
     }
@@ -127,8 +137,23 @@ class AddMenuItem extends Component {
         return errors ? errors.map(error => <p className="error"> {error} </p>) : null;
     }
 
+
+    storeFilename = (fileData) => {
+
+        const formData = this.state.formData;
+
+        formData['cover'].value = fileData;
+
+        this.setState({
+
+            formData
+        })
+    };
+
+
     render() {
 
+        console.log(this.state);
 
         return <div>
 
@@ -141,6 +166,14 @@ class AddMenuItem extends Component {
                 <div className="form-wrapper">
 
                     <form onSubmit={this.handleSubmit}>
+
+
+                        <div className="form-element">
+                            <label> Cover </label>
+                            <Uploader storeFilename={(filename) => this.storeFilename(filename)} />
+                        </div>
+
+
                         <div className="form-element">
                             <input
                                 type="text" placeholder="Enter Name"
@@ -174,6 +207,8 @@ class AddMenuItem extends Component {
                                 <option value="desert">Dessert</option>
                             </select>
                         </div>
+
+
 
                         {this.renderErrors()}
                         <button type="submit"> Add to Menu</button>

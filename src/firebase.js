@@ -6,7 +6,7 @@ var firebaseConfig = {
     authDomain: "food-delivery-b222d.firebaseapp.com",
     databaseURL: "https://food-delivery-b222d.firebaseio.com",
     projectId: "food-delivery-b222d",
-    storageBucket: "",
+    storageBucket: "food-delivery-b222d.appspot.com",
     messagingSenderId: "216510786586",
     appId: "1:216510786586:web:b3ea1f217578b3dccfb5a3"
 };

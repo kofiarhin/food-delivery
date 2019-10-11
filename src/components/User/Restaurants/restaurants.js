@@ -75,7 +75,6 @@ class Restaurants extends Component {
     renderCta = () => {
 
         const role = sessionStorage.getItem("role");
-        console.log(role);
 
         if (role === "admin") {
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import RestDash from "./restDashboard";
 import AdminDash from "./adminDashboard";
+import CustDash from "./custsDashBoard";
 import Header from "../Header/header";
 import "./dashboard.sass"
 
@@ -28,6 +29,9 @@ class DashBoard extends Component {
 
             switch (role) {
 
+                case "customer":
+                    return <CustDash />
+                    break;
                 case "admin":
                     return <AdminDash {...this.props} />
                     break;

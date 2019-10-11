@@ -12,6 +12,21 @@ class Header extends Component {
     state = {
         showNav: false
     }
+
+    renderCartSummary = () => {
+
+        const cart = JSON.parse(sessionStorage.getItem("cart"))
+        const role = "customer";
+
+        if (cart && role === "customer") {
+
+            return <Link to='/user/viewCart'> Cart ({`${cart.length}`}) </Link>
+        }
+
+
+    }
+
+
     renderLinks = () => {
 
         const userId = sessionStorage.getItem('loginId');
@@ -22,6 +37,7 @@ class Header extends Component {
 
                 <Link to="/restaurants"> Restaurants</Link>
                 <Link to="/dashboard"> Dashboard</Link>
+                {this.renderCartSummary()}
                 <Link to="/logout"> Logout</Link>
 
             </nav>

@@ -11,6 +11,7 @@ const genDate = () => {
 
 const defaultImage = "https://upload.wikimedia.org/wikipedia/commons/1/1e/Default-avatar.jpg";
 const restDefaultImage = "https://doorservers.com/media/images/default_restaurant.png";
+const foodDefaultImage = "http://myeatable.com/assets/images/default-food-image-large.png"
 
 const genPassword = () => {
 
@@ -23,4 +24,4 @@ const genPassword = () => {
 
 }
 
-export { genDate, defaultImage, restDefaultImage, genPassword }
+export { genDate, defaultImage, restDefaultImage, genPassword, foodDefaultImage }

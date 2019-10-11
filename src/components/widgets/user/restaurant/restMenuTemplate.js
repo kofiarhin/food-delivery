@@ -17,8 +17,9 @@ const RestMenuTemplate = ({ menuData, handleSubmit }) => {
             <input type="hidden" name="item" value={menuItem.id} />
             <input type="hidden" name="name" value={menuItem.name} />
             <input type="hidden" name="price" value={menuItem.price} />
+            <input type="hidden" name="fileUrl" value={menuItem.cover.fileUrl} />
             <button type="submit" className='cta'> Add to Cart </ button>
-        </form> : null;
+        </form > : null;
     }
 
     const renderMenuItems = (category, menuData) => {
@@ -27,7 +28,10 @@ const RestMenuTemplate = ({ menuData, handleSubmit }) => {
 
             return menuItem.category === category ? <div className="menu-item">
 
-                <div className="avatar"></div>
+                <div className="avatar" style={{
+                    backgroundImage: `url(${menuItem.cover.fileUrl})`,
+
+                }}></div>
                 <div className="desc">
                     <p className="item-name"> {menuItem.name} </p>
                     <p className="item-price">Price: GHC{menuItem.price} </p>

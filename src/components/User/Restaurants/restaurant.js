@@ -94,11 +94,27 @@ class Restaurant extends Component {
 
             itemId: event.target.item.value,
             name: event.target.name.value,
-            price: parseInt(event.target.price.value)
+            price: parseInt(event.target.price.value),
+            fileUrl: event.target.fileUrl.value
         }
 
 
+        if (cart && cart.length > 0) {
+
+
+
+
+        } else {
+
+            this.addItemToCart(cartData)
+        }
+
+        console.log('testing mic')
+
+        return;
         if (!_.isEmpty(cartData)) {
+
+
 
             cart.push(cartData);
 
@@ -113,14 +129,15 @@ class Restaurant extends Component {
     }
 
 
-    renderCart = () => {
-
+    addItemToCart = (cartData) => {
         const cart = this.state.cart;
 
-        if (cart) {
+        cart.push(cartData);
 
-            return <Link to={`/user/viewCart`}> <p className="feedback text-center"> You have  {cart.length} items  in cart </p></Link>
-        }
+        this.setState({
+
+            cart
+        })
     }
 
 
@@ -146,10 +163,8 @@ class Restaurant extends Component {
             <Header />
             <div className="container">
 
-                {/* {this.renderProfile()} */}
-
-                {this.renderCart()}
                 {this.renderMenu()}
+                {this.renderProfile()}
 
 
 
