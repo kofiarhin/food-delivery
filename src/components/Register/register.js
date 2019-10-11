@@ -51,6 +51,7 @@ class Register extends Component {
 
 
 
+
     }
 
 
@@ -136,22 +137,49 @@ class Register extends Component {
 
             firebase.database().ref('login').push(loginData).then(() => {
 
-                //fetch last insert id
-                firebase.database().ref('login').orderByChild("createdOn").limitToLast(1).once("value").then(snapshot => {
+
+                const email = dataToSubmit.email;
+
+                //fetch user from database and get the login id;
+
+                firebase.database().ref('login').orderByChild("email").equalTo(email).once("value").then(snapshot => {
 
                     const user = firebaseLooper(snapshot)[0];
-
                     const loginId = user.id;
-
                     dataToSubmit['loginId'] = loginId;
 
-                    firebase.database().ref('users').push(dataToSubmit).then(() => {
 
+                    //add user to users collection and redirect to login page
+                    firebase.database().ref('users').push(dataToSubmit).then(() => {
                         sessionStorage.setItem("success", "Accont Successfully created");
                         this.props.history.push("/login");
 
                     });
+
+
                 })
+
+
+
+                //fetch last insert id
+
+                //fetch list of all users in login;
+
+                // firebase.database().ref('login').orderByChild("createdOn").limitToLast(1).once("value").then(snapshot => {
+
+                //     const user = firebaseLooper(snapshot)[0];
+
+                //     const loginId = user.id;
+
+                //     dataToSubmit['loginId'] = loginId;
+
+                //     firebase.database().ref('users').push(dataToSubmit).then(() => {
+
+                //         sessionStorage.setItem("success", "Accont Successfully created");
+                //         this.props.history.push("/login");
+
+                //     });
+                // })
 
             })
         }

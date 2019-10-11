@@ -27,16 +27,52 @@ class Header extends Component {
     }
 
 
+
+    renderUserLinks = () => {
+
+        const role = sessionStorage.getItem("role");
+
+
+        switch (role) {
+
+            case "rest":
+                return <ul className="links-wrapper">
+
+                    <li> <Link to="/restaurants"> Orders  </Link></li>
+
+                </ul>
+                break;
+
+            case "customer":
+
+                return <ul className="links-wrapper">
+                    <li> <Link to="/user/viewCart"> Cart </Link></li>
+                </ul>
+                break;
+
+            case "admin":
+                return <ul className="links-wrapper">
+                    <li> <Link to="/customers"> Customers  </Link></li>
+
+                </ul>
+                break;
+            default:
+                return null;
+        }
+    }
+
     renderLinks = () => {
 
+
+        //check if user is logged in
         const userId = sessionStorage.getItem('loginId');
 
         if (userId) {
 
             return <nav>
-
-                <Link to="/restaurants"> Restaurants</Link>
                 <Link to="/dashboard"> Dashboard</Link>
+                <Link to="/restaurants"> Restaurants</Link>
+                {this.renderUserLinks()}
                 {this.renderCartSummary()}
                 <Link to="/logout"> Logout</Link>
 

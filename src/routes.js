@@ -12,7 +12,7 @@ import Restaurant from "./components/User/Restaurants/restaurant";
 import Customers from "./components/User/Customers/customers";
 import Customer from "./components/User/Customers/customer";
 import Riders from "./components/User/Riders/riders";
-import Orders from "./components/orders/orders";
+import Orders from "./components/User/orders/orders";
 import User from "./components/User/user";
 import AddUser from "./components/User/addUser";
 import AddRestaurant from "./components/User/addRestaurant";
@@ -38,12 +38,12 @@ const Routes = () => {
             <Route path="/orders" exact component={Orders} />
             <Route path="/restaurants" exact component={Restaurants} />
             <Route path="/customers" exact component={Customers} />
+            <Route path="/user/viewCart" exact component={ViewCart} />
             <Route path="/customers/:id" exact component={Customer} />
             <Route path="/restaurant/add-restaurant" exact component={AddRestaurant} />
             <Route path="/restaurant/:id" exact component={Restaurant} />
             <Route path="/restaurant/addMenuItem/:id" exact component={AddMenuItem} />
             <Route path="/user/add-user" exact component={AddUser} />
-            <Route path="/user/viewCart" exact component={ViewCart} />
             <Route path="/user/:id" exact component={User} />
             <Route path="/restaurant/:id/menu" exact component={RestMenu} />
         </Switch>
