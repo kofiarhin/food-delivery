@@ -23,53 +23,16 @@ class Search extends Component {
 
         console.log(query);
 
-        firebase.database().ref("restaurants").orderByChild("location").once("value").then(snapshot => {
+        firebase.database().ref('restaurants').orderByChild('location').equalTo(query).once("value").then(snapshot => {
 
             const rests = firebaseLooper(snapshot);
 
-            if (rests) {
+            this.setState({
 
-                this.setState({
-                    rests
-                })
-            }
+                rests
+            })
 
         })
-
-
-        // if (query) {
-
-        //     // this.setState({
-
-        //     //     search: query
-        //     // })
-
-
-        //     firebase.database().ref('restaurants').orderByChild("location").equalTo(`${query}`).once('value').then(snapshot => {
-
-        //         const rests = firebaseLooper(snapshot);
-
-        //         console.log(rests);
-
-        //         if (rests) {
-
-        //             this.setState({
-
-        //                 rests
-        //             })
-        //         }
-        //     })
-        // } else {
-
-        //     this.setState({
-
-        //         error: "Search cannot be empty"
-        //     })
-        // }
-
-
-
-
 
 
 

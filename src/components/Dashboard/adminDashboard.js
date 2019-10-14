@@ -15,16 +15,19 @@ const AdminDashboard = () => {
                 <p> Customers </p>
             </Link>
 
-            <Link to="/riders" className="dash-unit ">
-                <i class="fas fa-motorcycle"></i>
-                <p>Riders</p>
-            </Link>
             <Link to="/restaurants" className="dash-unit ">
 
                 <i class="fas fa-utensils"></i>
                 <p>Restaurant</p>
 
             </Link>
+
+            <Link to="/riders" className="dash-unit ">
+                <i class="fas fa-motorcycle"></i>
+                <p>Riders</p>
+            </Link>
+
+
             <Link to="/orders" className="dash-unit ">
 
                 <i class="fas fa-concierge-bell"></i>

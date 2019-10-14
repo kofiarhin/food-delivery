@@ -1,55 +1,36 @@
 .menu-wrapper
-    width: 700px
-    max-width: 90%
-    margin: 0 auto
-    padding: 1rem
-    .menu-unit
+    .cat-name
+        text-transform: capitalize
+        margin-bottom: 1.8rem
+        font:
+            size: 2rem
+            weight: 400
+    .menu-item
+        display: flex
+        border: 1px solid rgba(black, 0.4)
+        padding: 1rem
         margin-bottom: 1rem
-        padding: 0rem 1rem
-        .cat-name
-            text-transform: capitalize
-            margin-bottom: 0.5rem
-            font:
-                weight: 300
-                size: 2rem
-        .cat-item
-            text-transform: capitalize
-        .menu-item
-            display: flex
-            justify-content: space-around
-            align-items: center
-            margin-bottom: 0.8rem
-            .avatar
-                width: 100px
-                height: 100px
-                background:
-                    size: cover
-                    position: center
-                    repeat: no-repeat
-                margin-right: 1.4rem
-            .desc
-                .item-name
-                    font-size: 1.5rem
+        border-radius: 5px
+        cursor: pointer
+        .avatar
+            width: 100px
+            height: 100px
+            margin-right: 1rem
+        .desc
             .item-name
-                    font-size: 1.2rem
-                    text-transform: capitalize
-                    margin-bottom: 0.5rem
+                text-transform: capitalize
+                font-size: 1.5rem
+                margin-bottom: 0.5rem
             .item-price
-                margin-bottom: 0.8rem
                 font:
+                    size: 1.5rem
                     weight: 700
-                    size: 1.1rem
-            .menu-item-content
-                input
-                    display: block
-                    padding: 0.5rem
-                    text-indent: 1rem
-                    font-weight: 900
-                .cta
-                    margin-top: 0.5rem
-                    padding: 0.8rem 2rem
-                    outline: none
-                    border: none
-                    cursor: pointer
-                    background: #2685bf
-                    color: white
+                margin-bottom: 1rem
+            .cta
+                display: inline-block
+                width: auto
+                padding: 0.8rem 2rem
+                background: orange
+                outline: none
+                border: none
+                

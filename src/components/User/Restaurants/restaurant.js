@@ -109,23 +109,7 @@ class Restaurant extends Component {
             this.addItemToCart(cartData)
         }
 
-        console.log('testing mic')
 
-        return;
-        if (!_.isEmpty(cartData)) {
-
-
-
-            cart.push(cartData);
-
-            const sessionData = JSON.stringify(cart);
-
-            sessionStorage.setItem("cart", sessionData);
-
-            this.setState({
-                cart
-            })
-        }
     }
 
 
@@ -154,6 +138,29 @@ class Restaurant extends Component {
 
     }
 
+
+    renderCart = () => {
+
+
+        return <div className="cart-items-wrapper">
+
+            <h1>Your Cart</h1>
+
+            <div className="cart-item">
+
+                <div className="avatar"></div>
+                <div className="content">
+                    <p className="cart-item-name">Name: Grilled Pork </p>
+                    <p className="cart-item-price">Price: 400 </p>
+                </div>
+
+                <div>
+
+                </div>
+            </div>
+
+        </div>
+    }
     render() {
 
         // console.log(this.state);
@@ -163,9 +170,16 @@ class Restaurant extends Component {
             <Header />
             <div className="container">
 
-                {this.renderMenu()}
-                {this.renderProfile()}
+                {/* {this.renderProfile()} */}
 
+                <div className="layout">
+
+                    <div className="col-60">
+                        {this.renderMenu()}
+                    </div>
+                    <div className="col-40"> {this.renderCart()}</div>
+
+                </div>
 
 
             </div>

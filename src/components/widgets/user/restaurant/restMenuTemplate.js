@@ -13,12 +13,38 @@ const RestMenuTemplate = ({ menuData, handleSubmit }) => {
 
         const role = sessionStorage.getItem("role");
 
+        console.log(role)
+        switch (role) {
+
+            case "customer":
+                return <div className="btn-wrapper">
+                    <button className="btn btn-main"> Add To Cart  </button>
+
+                </div>
+
+            case "admin":
+
+                return <div className="btn-wrapper">
+
+                    <button className="btn btn-main"> Edit </button>
+                    <button className="btn btn-danger">Delete</button>
+
+                </div>
+                break;
+            case "rest":
+                return <div> Edit Item </div>
+                break;
+            default:
+                return null;
+        }
+        return;
+
         return role === "customer" ? <form onSubmit={(event) => handleSubmit(event)}>
             <input type="hidden" name="item" value={menuItem.id} />
             <input type="hidden" name="name" value={menuItem.name} />
             <input type="hidden" name="price" value={menuItem.price} />
             <input type="hidden" name="fileUrl" value={menuItem.cover.fileUrl} />
-            <button type="submit" className='cta'> Add to Cart </ button>
+            <button type="submit" className='cta btn-main btn'> Add to Cart </ button>
         </form > : null;
     }
 
@@ -29,16 +55,20 @@ const RestMenuTemplate = ({ menuData, handleSubmit }) => {
             return menuItem.category === category ? <div className="menu-item">
 
                 <div className="avatar" style={{
-                    backgroundImage: `url(${menuItem.cover.fileUrl})`,
+                    backgroundImage: `url(${menuItem.cover.fileUrl})`
 
                 }}></div>
                 <div className="desc">
                     <p className="item-name"> {menuItem.name} </p>
                     <p className="item-price">Price: GHC{menuItem.price} </p>
-                </div>
-                <div className="menu-item-content">
                     {renderCta(menuItem)}
                 </div>
+                {/* 
+                <div className="desc">
+                    <p className="item-name"> {menuItem.name} </p>
+                   
+                </div> */}
+
             </div> : null;
         })
 
@@ -81,7 +111,12 @@ const RestMenuTemplate = ({ menuData, handleSubmit }) => {
 
     }
 
-    return <div className="menu-wrapper">  {renderMenu()}</div>
+    return <div className="menu-wrapper">
+
+        <h1 className="main-title"> Menu</h1>
+        {renderMenu()}
+
+    </div>
 }
 
 export default RestMenuTemplate;
