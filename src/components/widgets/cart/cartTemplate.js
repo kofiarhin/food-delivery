@@ -3,7 +3,7 @@ import "./cartTemplate.sass"
 import { Link } from "react-router-dom";
 import { parse } from "url";
 
-const CartTemplate = ({ cartData, link, text, clearCart, removeItem }) => {
+const CartTemplate = ({ cartData, link, text, clearCart, removeItem, placeOrder }) => {
 
 
     const renderCart = () => {
@@ -39,8 +39,8 @@ const CartTemplate = ({ cartData, link, text, clearCart, removeItem }) => {
     const renderCta = () => {
 
         return <div className="button-wrapper">
-            <Link to={link} className="cta"> {text}</Link>
-            <div className="cta clear" onClick={() => clearCart()}> Clear Cart</div>
+            {/* <Link to={link} className="cta"> {text}</Link> */}
+            {/* <div className="cta clear" onClick={() => clearCart()}> Clear Cart</div> */}
         </div>
 
     }
@@ -50,6 +50,8 @@ const CartTemplate = ({ cartData, link, text, clearCart, removeItem }) => {
         {renderCart()}
         {renderTotal()}
         {renderCta()}
+
+        <div className="order btn btn-block btn-main text-center" onClick={() => placeOrder(this.state.cart)}> Place Order </div>
 
     </div>
 }

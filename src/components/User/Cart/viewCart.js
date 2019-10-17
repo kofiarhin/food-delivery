@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "../../Header/header";
 import CartTemplate from "../../widgets/cart/cartTemplate";
 import "./viewCart.sass";
-
+import _ from "lodash";
 
 class ViewCart extends Component {
 
@@ -33,6 +33,27 @@ class ViewCart extends Component {
         })
     }
 
+    removeItem = (item) => {
+
+        const cart = this.state.cart;
+
+        if (!_.isEmpty(cart)) {
+
+            cart.forEach((cartItem, index) => {
+
+                if (cartItem.id === item.id) {
+
+                    cart.splice(index);
+                    sessionStorage.setItem('cart', JSON.stringify(cart));
+                    this.setState({
+                        cart
+                    })
+                }
+
+            });
+
+        }
+    }
     renderCart = () => {
 
         const cart = this.state.cart;
@@ -42,6 +63,7 @@ class ViewCart extends Component {
             text="Place Order"
             link="user/order/placeOrder"
             clearCart={() => this.clearCart()}
+            removeItem={(item) => this.removeItem(item)}
         /> : null;
 
     }
