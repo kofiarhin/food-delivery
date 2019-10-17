@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./restMenuTemplate.sass";
 
-const RestMenuTemplate = ({ menuData, handleSubmit }) => {
+const RestMenuTemplate = ({ menuData, addToCart }) => {
 
     const role = sessionStorage.getItem("role");
 
@@ -13,13 +13,11 @@ const RestMenuTemplate = ({ menuData, handleSubmit }) => {
 
         const role = sessionStorage.getItem("role");
 
-        console.log(role)
         switch (role) {
 
             case "customer":
                 return <div className="btn-wrapper">
-                    <button className="btn btn-main"> Add To Cart  </button>
-
+                    <button className="btn btn-main" onClick={() => addToCart(menuItem)}> Add To Cart  </button>
                 </div>
 
             case "admin":
@@ -37,15 +35,7 @@ const RestMenuTemplate = ({ menuData, handleSubmit }) => {
             default:
                 return null;
         }
-        return;
 
-        return role === "customer" ? <form onSubmit={(event) => handleSubmit(event)}>
-            <input type="hidden" name="item" value={menuItem.id} />
-            <input type="hidden" name="name" value={menuItem.name} />
-            <input type="hidden" name="price" value={menuItem.price} />
-            <input type="hidden" name="fileUrl" value={menuItem.cover.fileUrl} />
-            <button type="submit" className='cta btn-main btn'> Add to Cart </ button>
-        </form > : null;
     }
 
     const renderMenuItems = (category, menuData) => {
@@ -58,16 +48,13 @@ const RestMenuTemplate = ({ menuData, handleSubmit }) => {
                     backgroundImage: `url(${menuItem.cover.fileUrl})`
 
                 }}></div>
+
                 <div className="desc">
                     <p className="item-name"> {menuItem.name} </p>
                     <p className="item-price">Price: GHC{menuItem.price} </p>
                     {renderCta(menuItem)}
                 </div>
-                {/* 
-                <div className="desc">
-                    <p className="item-name"> {menuItem.name} </p>
-                   
-                </div> */}
+
 
             </div> : null;
         })

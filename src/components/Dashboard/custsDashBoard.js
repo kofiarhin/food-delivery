@@ -57,7 +57,7 @@ class CustDash extends Component {
             <h1 className="main-title text-center"> Welcome <span>{custData.name}</span> </h1>
             <div className="dash-wrapper">
 
-                <Link to="/customers" className="dash-unit ">
+                <Link to={`/user/${custData.id}`} className="dash-unit ">
                     <i class="fas fa-user"></i>
                     <p> Profile </p>
                 </Link>
@@ -80,7 +80,7 @@ class CustDash extends Component {
     render() {
 
 
-        console.log(this.state.custData);
+
 
         return <div> {this.renderDash()} </div>
     }

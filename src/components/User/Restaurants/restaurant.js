@@ -4,7 +4,8 @@ import { firebase, firebaseLooper } from "../../../firebase";
 import { restDefaultImage } from "../../../config";
 import RestMenuTemplate from "../../widgets/user/restaurant/restMenuTemplate";
 import _ from "lodash";
-import { Link } from "react-router-dom";
+import CartTemplate from "../../widgets/cart/cartTemplate";
+import { isRestElement } from "@babel/types";
 
 class Restaurant extends Component {
 
@@ -13,7 +14,8 @@ class Restaurant extends Component {
 
         rest: null,
         restMenu: null,
-        cart: []
+        cart: [],
+        error: ""
     }
 
 
@@ -23,12 +25,15 @@ class Restaurant extends Component {
 
         const cart = JSON.parse(sessionStorage.getItem("cart"));
 
-        if (cart) {
+        if (!_.isEmpty(cart)) {
 
             this.setState({
                 cart
             })
         }
+
+
+
 
 
 
@@ -39,13 +44,8 @@ class Restaurant extends Component {
 
             if (restData) {
 
-
-
-
                 const restId = restData.id;
-
                 //get list of menu
-
                 firebase.database().ref(`menus`).orderByChild('restId').equalTo(restId).once("value").then(snapshot => {
 
                     const restMenu = firebaseLooper(snapshot);
@@ -85,104 +85,123 @@ class Restaurant extends Component {
 
 
 
-    handleSubmit = (event) => {
-
-        event.preventDefault();
-        const cart = this.state.cart;
-
-        const cartData = {
-
-            itemId: event.target.item.value,
-            name: event.target.name.value,
-            price: parseInt(event.target.price.value),
-            fileUrl: event.target.fileUrl.value
-        }
-
-
-        if (cart && cart.length > 0) {
-
-
-
-
-        } else {
-
-            this.addItemToCart(cartData)
-        }
-
-
-    }
-
-
-    addItemToCart = (cartData) => {
-        const cart = this.state.cart;
-
-        cart.push(cartData);
-
-        this.setState({
-
-            cart
-        })
-    }
-
 
     renderMenu = () => {
 
 
         const menuData = this.state.restMenu;
 
-
         if (!_.isEmpty(menuData)) {
 
-            return <RestMenuTemplate menuData={menuData} handleSubmit={(event) => this.handleSubmit(event)} />
+            return <RestMenuTemplate menuData={menuData} addToCart={(item) => this.addToCart(item)} />
         }
 
     }
 
 
+    addToCart = (item) => {
+
+        let cart = this.state.cart;
+
+        if (!_.isEmpty(cart)) {
+
+            //check if item has already in cart
+            const check = cart.find((cartItem => {
+                return cartItem.id === item.id
+
+            }));
+
+            if (check) {
+
+                this.setState({
+                    error: "Item already added to cart"
+                })
+            } else {
+
+                //add item to cart
+
+                cart.push(item);
+                const cartData = JSON.stringify(cart);
+                sessionStorage.setItem("cart", cartData);
+                this.setState({
+                    cart
+                })
+
+            }
+
+        } else {
+
+
+            cart.push(item);
+            const cartData = JSON.stringify(cart);
+            sessionStorage.setItem("cart", cartData);
+            this.setState({
+                cart
+            })
+
+
+        }
+
+
+    }
+
+
+    removeItem = (item) => {
+
+        const cart = this.state.cart;
+        let itemIndex = null;
+        cart.forEach((cartItem, index) => {
+
+            if (cartItem.id === item.id) {
+
+                cart.splice(index);
+                sessionStorage.setItem("cart", JSON.stringify(cart));
+                this.setState({
+                    cart
+                })
+            }
+
+        });
+
+
+    }
+
     renderCart = () => {
 
+        const cart = this.state.cart;
 
-        return <div className="cart-items-wrapper">
+        return (!_.isEmpty(cart)) ? <CartTemplate cartData={cart} text="proceed to cart" link="/user/viewCart" clearCart={this.clearCart} removeItem={(item) => this.removeItem(item)} /> : null;
 
-            <h1>Your Cart</h1>
-
-            <div className="cart-item">
-
-                <div className="avatar"></div>
-                <div className="content">
-                    <p className="cart-item-name">Name: Grilled Pork </p>
-                    <p className="cart-item-price">Price: 400 </p>
-                </div>
-
-                <div>
-
-                </div>
-            </div>
-
-        </div>
     }
+
+
+    clearCart = () => {
+
+
+        sessionStorage.removeItem('cart');
+        this.setState({
+            cart: []
+        })
+    }
+
     render() {
 
-        // console.log(this.state);
+        console.log(this.state.cart);
 
         return <div>
 
             <Header />
-            <div className="container">
+            {/* {this.renderProfile()} */}
+            <div className="layout">
 
-                {/* {this.renderProfile()} */}
-
-                <div className="layout">
-
-                    <div className="col-60">
-                        {this.renderMenu()}
-                    </div>
-                    <div className="col-40"> {this.renderCart()}</div>
-
+                <div className="menu"> {this.renderMenu()}</div>
+                <div className="cart">
+                    <h1 className="main-title"> Your Cart </h1>
+                    {this.renderCart()}
                 </div>
-
-
             </div>
+
+
 
         </div >
     }

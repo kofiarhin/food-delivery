@@ -70,10 +70,11 @@ class Header extends Component {
         if (userId) {
 
             return <nav>
+                <Link to="/"> Home</Link>
                 <Link to="/dashboard"> Dashboard</Link>
                 <Link to="/restaurants"> Restaurants</Link>
                 {this.renderUserLinks()}
-                {this.renderCartSummary()}
+                {/* {this.renderCartSummary()} */}
                 <Link to="/logout"> Logout</Link>
 
             </nav>
@@ -82,6 +83,7 @@ class Header extends Component {
             return <nav>
 
                 <Link to="/"> Home</Link>
+                <Link to="/restaurants"> Restaurants</Link>
                 <Link to="/login"> Login</Link>
                 <Link to="/register"> Register</Link>
             </nav>
