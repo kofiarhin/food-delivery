@@ -5,7 +5,7 @@ import { restDefaultImage } from "../../../config";
 import RestMenuTemplate from "../../widgets/user/restaurant/restMenuTemplate";
 import _ from "lodash";
 import CartTemplate from "../../widgets/cart/cartTemplate";
-import { isRestElement } from "@babel/types";
+import { Link } from "react-router-dom";
 
 class Restaurant extends Component {
 
@@ -33,10 +33,6 @@ class Restaurant extends Component {
         }
 
 
-
-
-
-
         //fetch restaurant
         firebase.database().ref(`restaurants/${id}`).once("value").then(snapshot => {
 
@@ -49,7 +45,7 @@ class Restaurant extends Component {
                 firebase.database().ref(`menus`).orderByChild('restId').equalTo(restId).once("value").then(snapshot => {
 
                     const restMenu = firebaseLooper(snapshot);
-
+                    restMenu.restName = restData.name
                     this.setState({
                         rest: restData,
                         restMenu
@@ -91,6 +87,7 @@ class Restaurant extends Component {
 
         const menuData = this.state.restMenu;
 
+
         if (!_.isEmpty(menuData)) {
 
             return <RestMenuTemplate menuData={menuData} addToCart={(item) => this.addToCart(item)} />
@@ -100,6 +97,10 @@ class Restaurant extends Component {
 
 
     addToCart = (item) => {
+
+        //set item status to pending
+        item.status = "pending";
+        item.restName = this.state.rest.name;
 
         let cart = this.state.cart;
 
@@ -170,7 +171,13 @@ class Restaurant extends Component {
 
         const cart = this.state.cart;
 
-        return (!_.isEmpty(cart)) ? <CartTemplate cartData={cart} text="proceed to cart" link="/user/viewCart" clearCart={this.clearCart} removeItem={(item) => this.removeItem(item)} /> : null;
+        return (!_.isEmpty(cart)) ? <div className='cart'>
+
+            <CartTemplate cartData={cart} text="proceed to cart" link="/user/viewCart" clearCart={this.clearCart} removeItem={(item) => this.removeItem(item)} />
+
+            <Link to="/user/viewCart" class="btn btn-main text-center"> Proceed to Checkout </Link>
+
+        </div> : null;
 
     }
 
@@ -195,10 +202,8 @@ class Restaurant extends Component {
             <div className="layout">
 
                 <div className="menu"> {this.renderMenu()}</div>
-                <div className="cart">
-                    <h1 className="main-title"> Your Cart </h1>
-                    {this.renderCart()}
-                </div>
+                {this.renderCart()}
+
             </div>
 
 

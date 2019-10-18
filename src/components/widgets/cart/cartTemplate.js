@@ -40,18 +40,14 @@ const CartTemplate = ({ cartData, link, text, clearCart, removeItem, placeOrder 
 
         return <div className="button-wrapper">
             {/* <Link to={link} className="cta"> {text}</Link> */}
-            {/* <div className="cta clear" onClick={() => clearCart()}> Clear Cart</div> */}
+            <div className="cta clear" onClick={() => clearCart()}> Clear Cart</div>
         </div>
 
     }
     return <div className="cart-wrapper">
 
-
         {renderCart()}
         {renderTotal()}
-        {renderCta()}
-
-        <div className="order btn btn-block btn-main text-center" onClick={() => placeOrder(this.state.cart)}> Place Order </div>
 
     </div>
 }

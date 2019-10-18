@@ -3,6 +3,8 @@ import Header from "../../Header/header";
 import CartTemplate from "../../widgets/cart/cartTemplate";
 import "./viewCart.sass";
 import _ from "lodash";
+import { firebase } from "../../../firebase";
+import { genDate } from "../../../config";
 
 class ViewCart extends Component {
 
@@ -64,8 +66,44 @@ class ViewCart extends Component {
             link="user/order/placeOrder"
             clearCart={() => this.clearCart()}
             removeItem={(item) => this.removeItem(item)}
+
+
         /> : null;
 
+
+    }
+
+    placeOrder = () => {
+
+        const cart = this.state.cart;
+
+        const userOrder = {
+
+            order: cart,
+            userId: sessionStorage.getItem('loginId'),
+            status: "pending",
+            createdOn: genDate()
+        };
+
+
+
+        //place order
+        firebase.database().ref("orders").push(userOrder).then(() => {
+
+            //clear the cart
+            sessionStorage.removeItem('cart');
+            this.setState({
+                cart: []
+            })
+            this.props.history.push('/dashboard');
+        })
+    }
+
+    renderCta = () => {
+
+        const cart = this.state.cart;
+
+        return cart ? <div className="btn btn-main text-center" onClick={() => this.placeOrder()}> Place Order </div> : null;
     }
 
     render() {
@@ -73,9 +111,10 @@ class ViewCart extends Component {
         return <div>
 
             <Header />
-            <div className="cart">
+            <div className="view-cart">
 
                 {this.renderCart()}
+                {this.renderCta()}
 
             </div>
 
