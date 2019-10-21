@@ -198,7 +198,7 @@ class Restaurant extends Component {
         return <div>
 
             <Header />
-            {/* {this.renderProfile()} */}
+            {this.renderProfile()}
             <div className="layout">
 
                 <div className="menu"> {this.renderMenu()}</div>

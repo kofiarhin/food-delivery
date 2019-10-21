@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { firebase, firebaseLooper } from "../../../firebase";
 import Header from "../../Header/header";
 import _ from "lodash";
+import { Link } from "react-router-dom";
+import "./orders.sass";
 
 class Orders extends Component {
 
@@ -32,38 +34,53 @@ class Orders extends Component {
         })
     }
 
-    renderItem = (item) => {
 
-        const orders = item.order;
 
-        return orders.map(order => {
 
-            return <div className="order-item-unit">
 
-                <p>{order.name}</p>
-                <p>Price: {order.price}</p>
-                <p> Restaurant: {order.restName} </p>
-                <p> Status: {order.status} </p>
+    renderOrderDetails = (order) => {
 
+        return (!_.isEmpty(order)) > 0 ? order.map(item => {
+
+            return <div className="order-unit">
+
+                <p>Name: {item.name} </p>
+                <p>Price: {item.name} </p>
+                <p>Status: {item.status} </p>
             </div>
-        })
+        }) : null;
     }
+    renderOrderItems = (order) => {
 
-
-
+        return (!_.isEmpty(order)) ? this.renderOrderDetails(order.order) : null;
+    }
 
 
     renderOrders = () => {
 
         const orders = this.state.orders;
 
-        // console.log(orders)
+        return (!_.isEmpty(orders)) ? orders.map((order, index) => {
 
-        return orders ? orders.map(item => {
+            index += 1;
 
-            return <div> {this.renderItem(item)} </div>
+            return <div>
+
+                <div className="order-wrapper">
+                    <div className='order-item'>
+                        <p className="order-index">Order: {index}</p>
+                        {this.renderOrderItems(order)}
+                    </div>
+                </div>
+
+            </div>
+
         }) : null;
+
     }
+
+
+
 
     render() {
 
@@ -72,6 +89,7 @@ class Orders extends Component {
 
             <Header />
 
+            <h1 className="main-title text-center"> Your Order </h1>
             {this.renderOrders()}
 
 
