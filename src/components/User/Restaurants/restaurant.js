@@ -12,10 +12,11 @@ class Restaurant extends Component {
 
     state = {
 
-        rest: null,
+        restData: null,
         restMenu: null,
         cart: [],
-        error: ""
+        errors: "",
+        showError: false
     }
 
 
@@ -47,7 +48,7 @@ class Restaurant extends Component {
                     const restMenu = firebaseLooper(snapshot);
                     restMenu.restName = restData.name
                     this.setState({
-                        rest: restData,
+                        restData,
                         restMenu
                     })
                 })
@@ -100,22 +101,45 @@ class Restaurant extends Component {
 
         //set item status to pending
         item.status = "pending";
-        item.restName = this.state.rest.name;
-
+        item.restName = this.state.restData.name;
         let cart = this.state.cart;
+        let errors = [];
 
+
+        //check if cart is empty
         if (!_.isEmpty(cart)) {
 
+            //check if user is ordering from the same restaurant
+
+            cart.forEach(cartItem => {
+
+                if (cartItem.restId !== item.restId) {
+
+                    errors.push("cannot add item from different restaurant");
+                }
+
+            })
+
+
+
             //check if item has already in cart
-            const check = cart.find((cartItem => {
-                return cartItem.id === item.id
+            cart.forEach((cartItem => {
+
+                if (cartItem.id === item.id) {
+
+                    errors.push('Item already added to cart');
+                }
 
             }));
 
-            if (check) {
+
+
+            //check if error array is empty
+            if (errors.length > 0) {
 
                 this.setState({
-                    error: "Item already added to cart"
+                    errors,
+                    showError: true
                 })
             } else {
 
@@ -126,7 +150,7 @@ class Restaurant extends Component {
                 sessionStorage.setItem("cart", cartData);
                 this.setState({
                     cart
-                })
+                });
 
             }
 
@@ -171,7 +195,7 @@ class Restaurant extends Component {
 
         const cart = this.state.cart;
 
-        return (!_.isEmpty(cart)) ? <div className='cart'>
+        return (!_.isEmpty(cart)) ? <div className='cart mini-cart'>
 
             <CartTemplate cartData={cart} text="proceed to cart" link="/user/viewCart" clearCart={this.clearCart} removeItem={(item) => this.removeItem(item)} />
 
@@ -191,18 +215,39 @@ class Restaurant extends Component {
         })
     }
 
+    renderError = () => {
+
+        const errors = this.state.errors;
+
+        return this.state.showError ? <div className="error-container">
+
+            <div className="inner">
+
+                {errors.map(error => {
+
+                    return <p className="error">  {error}</p>
+                })}
+
+            </div>
+            <button className="btn btn-main" onClick={() => this.setState({
+                showError: false
+            })}>  Close</button>
+        </div> : null;
+    }
+
     render() {
 
-        console.log(this.state.cart);
+        // console.log(this.state.cart);
 
-        return <div>
+        return <div className="restaurant">
 
             <Header />
             {this.renderProfile()}
-            <div className="layout">
+            <div>
 
-                <div className="menu"> {this.renderMenu()}</div>
+                {this.renderMenu()}
                 {this.renderCart()}
+                {this.renderError()}
 
             </div>
 

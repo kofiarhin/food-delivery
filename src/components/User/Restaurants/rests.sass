@@ -1,13 +1,6 @@
-//layout
-.wrapper
-    display: flex
-    .menu
-        width: 60%
-    .cart
-        width: 40%
-        background: red
+$main: #6a1051
     
-    
+//restaurant profile    
 .rest-profile-wrapper
     text-align: center
     margin-bottom: 1rem
@@ -44,6 +37,29 @@
                 position: center
             border-radius: 50%
             margin: 0 auto 1rem
+.restaurant .cart
+    position: fixed
+    width: 300px
+    top: 100px
+    right: 40px
+    background: white
+    padding: 1rem
+    box-shadow: 5px 5px 10px rgba(black, 0.4)
+
+.error-container
+    position: fixed
+    left: 50%
+    top: 50%
+    background: white
+    padding: 5rem 2rem
+    width: 500px
+    transform: translate(-50%, -50%)
+    box-shadow: 5px 5px 10px rgba(black, 0.4)
+    .error
+        font-size: 2rem
+        text-transform: capitalize
+    .inner
+        position: relative
 
 
 @media(max-width: 750px)

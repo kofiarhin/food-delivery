@@ -3,26 +3,71 @@ import Header from "../../Header/header";
 import CartTemplate from "../../widgets/cart/cartTemplate";
 import "./viewCart.sass";
 import _ from "lodash";
-import { firebase } from "../../../firebase";
+import { firebase, firebaseLooper } from "../../../firebase";
 import { genDate } from "../../../config";
 
 class ViewCart extends Component {
 
     state = {
 
-        cart: null
+        cart: null,
+        userData: null,
+        restData: null
     }
 
     componentDidMount() {
 
         const cart = JSON.parse(sessionStorage.getItem("cart"));
 
+
         if (cart) {
 
-            this.setState({
+            //get userData;
+            const loginId = sessionStorage.getItem("loginId");
 
-                cart
+            //get the rest id
+            const restIds = cart.map(item => {
+
+                return item.restId;
+            });
+
+            console.log(restIds);
+
+            //get the firest rest id;
+            const restId = restIds[0];
+
+            console.log(restId);
+
+            // console.log(loginId);
+
+            firebase.database().ref('users').orderByChild('loginId').equalTo(loginId).once("value").then(snapshot => {
+
+                const userData = firebaseLooper(snapshot)[0];
+                if (!_.isEmpty(userData)) {
+
+
+                    //get restData;
+                    firebase.database().ref(`restaurants/${restId}`).once("value").then(snapshot => {
+
+                        const restData = snapshot.val();
+
+                        this.setState({
+
+                            cart,
+                            userData,
+                            restData
+                        })
+
+                    })
+
+
+
+                }
+
+
             })
+
+
         }
     }
 
@@ -56,6 +101,7 @@ class ViewCart extends Component {
 
         }
     }
+
     renderCart = () => {
 
         const cart = this.state.cart;
@@ -76,27 +122,49 @@ class ViewCart extends Component {
     placeOrder = () => {
 
         const cart = this.state.cart;
+        const userData = this.state.userData;
+        const restData = this.state.restData
 
-        const userOrder = {
-
-            order: cart,
-            userId: sessionStorage.getItem('loginId'),
-            status: "pending",
-            createdOn: genDate()
-        };
+        const { id: userId, name, loginId, location, contact, email } = userData;
 
 
+        if (userData) {
 
-        //place order
-        firebase.database().ref("orders").push(userOrder).then(() => {
+            const userInfo = {
 
-            //clear the cart
-            sessionStorage.removeItem('cart');
-            this.setState({
-                cart: []
+                name,
+                userId,
+                loginId,
+                location,
+                contact,
+                email
+
+            }
+
+            const userOrder = {
+                order: cart,
+                userData: userInfo,
+                restData,
+                status: "pending",
+                createdOn: genDate()
+            };
+
+
+            //place order
+            firebase.database().ref("orders").push(userOrder).then(() => {
+
+                //clear the cart
+                sessionStorage.removeItem('cart');
+                this.setState({
+                    cart: []
+                })
+                this.props.history.push('/dashboard');
             })
-            this.props.history.push('/dashboard');
-        })
+
+        }
+
+
+
     }
 
     renderCta = () => {
@@ -108,10 +176,11 @@ class ViewCart extends Component {
 
     render() {
 
+        console.log(this.state);
         return <div>
 
             <Header />
-            <div className="view-cart">
+            <div className="cart view-cart">
 
                 {this.renderCart()}
                 {this.renderCta()}

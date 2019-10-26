@@ -44,7 +44,7 @@ const CartTemplate = ({ cartData, link, text, clearCart, removeItem, placeOrder 
         </div>
 
     }
-    return <div className="cart-wrapper">
+    return <div>
 
         {renderCart()}
         {renderTotal()}

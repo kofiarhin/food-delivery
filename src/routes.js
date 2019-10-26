@@ -19,6 +19,8 @@ import AddRestaurant from "./components/User/addRestaurant";
 import AddMenuItem from "./components/User/Restaurants/addMenuItem";
 import RestMenu from "./components/User/Restaurants/restMenu";
 import ViewCart from "./components/User/Cart/viewCart";
+import RestOrders from "./components/User/orders/restOrders";
+import UserOrders from "./components/User/orders/userOrders";
 
 
 const Routes = () => {
@@ -38,12 +40,14 @@ const Routes = () => {
             <Route path="/orders" exact component={Orders} />
             <Route path="/restaurants" exact component={Restaurants} />
             <Route path="/customers" exact component={Customers} />
+            <Route path="/rest/orders/:id" exact component={RestOrders} />
             <Route path="/user/viewCart" exact component={ViewCart} />
             <Route path="/customers/:id" exact component={Customer} />
             <Route path="/restaurant/add-restaurant" exact component={AddRestaurant} />
             <Route path="/restaurant/:id" exact component={Restaurant} />
             <Route path="/restaurant/addMenuItem/:id" exact component={AddMenuItem} />
             <Route path="/user/add-user" exact component={AddUser} />
+            <Route path="/user/orders" exact component={UserOrders} />
             <Route path="/user/:id" exact component={User} />
             <Route path="/restaurant/:id/menu" exact component={RestMenu} />
         </Switch>

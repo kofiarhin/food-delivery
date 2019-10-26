@@ -32,15 +32,7 @@ class CustDash extends Component {
             }
         })
 
-        // firebase.database().ref(`login/${loginId}`).once("value").then(snapshot => {
 
-        //     const email = snapshot.val().email;
-
-        //     firebase.database().ref('users').orderByChild("email").equalTo(email).once("value").then(snapshot => {
-
-        //         console.log(snapshot.val());
-        //     })
-        // })
 
     }
 
@@ -62,7 +54,7 @@ class CustDash extends Component {
                     <p> Profile </p>
                 </Link>
 
-                <Link to="/orders" className="dash-unit ">
+                <Link to="/user/orders" className="dash-unit ">
 
                     <i class="fas fa-concierge-bell"></i>
                     <p>Orders</p>
