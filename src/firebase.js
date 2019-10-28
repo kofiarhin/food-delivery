@@ -15,13 +15,10 @@ firebase.initializeApp(firebaseConfig);
 
 
 const firebaseLooper = (snapshot) => {
-
     let data = [];
-
     snapshot.forEach(childSnapshot => {
         data.push({ id: childSnapshot.key, ...childSnapshot.val() });
     });
-
 
     return data;
 

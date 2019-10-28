@@ -25,7 +25,7 @@ class RestOrders extends Component {
         //get list of all orders
         //filter order of restaurant
 
-        firebase.database().ref('orders').once('value').then(snapshot => {
+        firebase.database().ref('orders').orderByChild("createdOn").once('value').then(snapshot => {
 
             const orders = firebaseLooper(snapshot);
 
@@ -50,11 +50,96 @@ class RestOrders extends Component {
 
     }
 
+    completeOrder = (orderId) => {
+
+        const orders = this.state.orders;
+
+        if (!_.isEmpty(orders)) {
+
+            const order = orders.find(order => {
+
+                return order.id === orderId
+            });
+
+            //set status to complete
+            order.status = "complete";
+
+            orders[orderId] = order;
+
+
+            //update database
+            firebase.database().ref(`orders/${orderId}`).update({
+                status: "complete"
+            }).then(() => {
+
+                //re - render the dom
+                this.setState({
+
+                    orders
+                })
+            })
+
+
+        }
+
+    }
+
+
+    deleteOrder = (orderId) => {
+
+        const orders = this.state.orders;
+        let position = null;
+        orders.forEach((order, index) => {
+
+            if (order.id === orderId) {
+
+                position = index
+            }
+        })
+
+
+
+        //update database
+
+        firebase.database().ref(`orders/${orderId}`).remove().then(() => {
+
+            orders.splice(position, 1);
+
+            this.setState({
+
+                orders
+            })
+
+        })
+
+
+
+    }
+
+    renderCta = (order) => {
+
+        const status = order.status;
+
+        //check the status of the order
+        switch (status) {
+
+
+            case "complete":
+                return <button className="btn btn-danger" onClick={() => this.deleteOrder(order.id)}> Delete Order</button>
+
+            case "pending":
+                return <button className="btn btn-success" onClick={() => this.completeOrder(order.id)}>Complete Order</button>
+            default:
+                return null;
+        }
+    }
+
 
 
     renderOrder = () => {
 
         const orders = this.state.orders;
+
 
         if (!_.isEmpty(orders)) {
 
@@ -64,40 +149,47 @@ class RestOrders extends Component {
 
                     <div className="user-info">
 
-                        <p className="name"> Customer Name: {order.userInfo.name}</p>
-                        <p className="location"> Location: {order.userInfo.location}</p>
-                        <p className="contact"> Contact: {order.userInfo.contact}</p>
-
+                        <h2 className="name">Name: {order.userData.name}</h2>
+                        <p className="location"> Location: {order.userData.location}</p>
+                        <p className="contact"> Contact: {order.userData.contact}</p>
+                        <p className="contact"> Date: {order.createdOn}</p>
                     </div>
-
-
                     {/* list of orders */}
                     <div>
 
                         {order.order.map(item => {
-
                             return <p> {item.name}</p>;
                         })}
 
                     </div>
 
+                    <p> Status: {order.status}</p>
+
+                    {this.renderCta(order)}
                 </div>
             })
+        } {
+
+            return <div className="feedback"> No Orders </div>
         }
     }
+
+    clearHistory = () => {
+
+        console.log("clear all orders");
+    }
     render() {
-
-
-        console.log(this.state);
 
         //TODO -- CLEAN UP THE STRUCTURE OF THE ORDER
         return <div>
 
             <Header />
-            <h1 className="main-title"> List of Orders</h1>
+            <h1 className="main-title text-center"> List of Orders</h1>
 
             <div className="order-items-wrapper">
                 {this.renderOrder()}
+
+
 
             </div>
         </div>
