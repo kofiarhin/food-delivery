@@ -34,7 +34,6 @@ class Uploader extends Component {
     handleProgress = (progress) => {
 
         this.setState({
-
             progress
         })
     }
@@ -43,12 +42,12 @@ class Uploader extends Component {
 
         this.setState({
             avatar: filename,
+            progress: 100,
             isUploading: false
         })
 
         //get download url
         firebase.storage().ref("images").child(filename).getDownloadURL().then(url => {
-
 
             this.setState({
                 avatarURL: url

@@ -18,13 +18,12 @@ class User extends Component {
 
 
         const userId = this.props.match.params.id;
-        console.log(userId);
 
         //get user
-
         firebase.database().ref(`users/${userId}`).once('value').then(snapshot => {
 
-            const user = snapshot.val();
+            const user = { id: snapshot.key, ...snapshot.val() };
+
 
             if (user) {
 
@@ -60,7 +59,6 @@ class User extends Component {
             <div className="container">
 
                 <h1 className="main-title text-center"> Profile </h1>
-
                 {this.renderUser()}
 
             </div>

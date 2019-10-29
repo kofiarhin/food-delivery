@@ -22,13 +22,13 @@ const AdminDashboard = () => {
 
             </Link>
 
-            <Link to="/riders" className="dash-unit ">
+            {/* <Link to="/riders" className="dash-unit ">
                 <i class="fas fa-motorcycle"></i>
                 <p>Riders</p>
-            </Link>
+            </Link> */}
 
 
-            <Link to="/orders" className="dash-unit ">
+            <Link to="/admin/orders" className="dash-unit ">
 
                 <i class="fas fa-concierge-bell"></i>
                 <p>Orders</p>
