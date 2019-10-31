@@ -2,16 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./restMenuTemplate.sass";
 
-const RestMenuTemplate = ({ menuData, addToCart }) => {
+const RestMenuTemplate = ({ menuData, addToCart, handleDelete }) => {
 
     const role = sessionStorage.getItem("role");
 
     //  --- TODO ---
     //if role is customer display cta
 
+
     const renderCta = (menuItem) => {
 
         const role = sessionStorage.getItem("role");
+
+        console.log(menuItem);
 
         switch (role) {
 
@@ -24,13 +27,19 @@ const RestMenuTemplate = ({ menuData, addToCart }) => {
 
                 return <div className="btn-wrapper">
 
-                    <button className="btn btn-main"> Edit </button>
+                    <Link to={`/restaurant/menu/edit/${menuItem.id}`} className="btn btn-main text-center"> Edit </Link>
                     <button className="btn btn-danger">Delete</button>
 
                 </div>
                 break;
             case "rest":
-                return <div> Edit Item </div>
+
+                return <div className="btn-wrapper">
+
+                    <Link to={`/restaurant/menu/edit/${menuItem.id}`} className="btn btn-main text-center"> Edit </Link>
+                    <button className="btn btn-danger" onClick={() => handleDelete(menuItem)}>Delete</button>
+
+                </div>
                 break;
             default:
                 return null;

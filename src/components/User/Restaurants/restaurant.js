@@ -81,7 +81,34 @@ class Restaurant extends Component {
     }
 
 
+    handleDelete = (item) => {
 
+        const menuId = item.id;
+
+        const restMenu = this.state.restMenu;
+
+        let position = null;
+        restMenu.forEach((menuItem, index) => {
+
+            if (menuItem.id === menuId) {
+
+                position = index
+            }
+        })
+
+        restMenu.splice(position, 1);
+
+        firebase.database().ref(`menus/${menuId}`).remove().then(() => {
+
+            console.log("item removed")
+            this.setState({
+                restMenu
+            })
+
+        })
+
+
+    }
 
     renderMenu = () => {
 
@@ -91,7 +118,12 @@ class Restaurant extends Component {
 
         if (!_.isEmpty(menuData)) {
 
-            return <RestMenuTemplate menuData={menuData} addToCart={(item) => this.addToCart(item)} />
+            return <RestMenuTemplate
+                menuData={menuData}
+                addToCart={(item) => this.addToCart(item)}
+                handleDelete={(item) => this.handleDelete(item)}
+
+            />
         }
 
     }

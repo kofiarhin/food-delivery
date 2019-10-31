@@ -23,6 +23,7 @@ import RestOrders from "./components/User/orders/restOrders";
 import UserOrders from "./components/User/orders/userOrders";
 import AdminOrders from "./components/User/orders/adminOders";
 import ChangeProfile from "./components/User/changeProfile";
+import EditMenu from "./components/User/Restaurants/edit_menu";
 
 
 const Routes = () => {
@@ -54,6 +55,7 @@ const Routes = () => {
             <Route path="/admin/orders" exact component={AdminOrders} />
             <Route path="/user/:id" exact component={User} />
             <Route path="/restaurant/:id/menu" exact component={RestMenu} />
+            <Route path="/restaurant/menu/edit/:id" exact component={EditMenu} />
         </Switch>
 
     </Layout>

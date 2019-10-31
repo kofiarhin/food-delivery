@@ -76,7 +76,7 @@ class RestDash extends Component {
                 </Link>
 
 
-                <Link to={`/restaurant/${this.state.restId}/menu`} className="dash-unit">
+                <Link to={`/restaurant/${this.state.restId}`} className="dash-unit">
                     <i class="fas fa-menorah"></i>
                     <p> Menu </p>
                 </Link>
