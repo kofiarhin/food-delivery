@@ -175,11 +175,13 @@ class Restaurant extends Component {
 
         const cart = this.state.cart;
         let itemIndex = null;
+
+
         cart.forEach((cartItem, index) => {
 
             if (cartItem.id === item.id) {
 
-                cart.splice(index);
+                cart.splice(index, 1);
                 sessionStorage.setItem("cart", JSON.stringify(cart));
                 this.setState({
                     cart

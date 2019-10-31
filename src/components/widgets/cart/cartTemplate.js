@@ -2,6 +2,7 @@ import React from "react";
 import "./cartTemplate.sass"
 import { Link } from "react-router-dom";
 import { parse } from "url";
+import _ from "lodash";
 
 const CartTemplate = ({ cartData, link, text, clearCart, removeItem, placeOrder }) => {
 
@@ -20,19 +21,25 @@ const CartTemplate = ({ cartData, link, text, clearCart, removeItem, placeOrder 
 
     const renderTotal = () => {
 
-        let total = 0;
+        if (!_.isEmpty(cartData)) {
 
-        cartData.forEach(item => {
+            let total = 0;
 
-            total += parseInt(item.price)
-        });
+            cartData.forEach(item => {
+
+                total += parseInt(item.price)
+            });
 
 
 
-        return <div>
+            return <div>
 
-            <p className='total'> Total: {total}</p>
-        </div>
+                <p className='total'> Total: {total}</p>
+            </div>
+
+        }
+
+
 
     }
 

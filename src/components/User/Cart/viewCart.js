@@ -90,7 +90,7 @@ class ViewCart extends Component {
 
                 if (cartItem.id === item.id) {
 
-                    cart.splice(index);
+                    cart.splice(index, 1);
                     sessionStorage.setItem('cart', JSON.stringify(cart));
                     this.setState({
                         cart
@@ -106,15 +106,20 @@ class ViewCart extends Component {
 
         const cart = this.state.cart;
 
-        return cart ? <CartTemplate
-            cartData={cart}
-            text="Place Order"
-            link="user/order/placeOrder"
-            clearCart={() => this.clearCart()}
-            removeItem={(item) => this.removeItem(item)}
+        return (!_.isEmpty(cart)) ? <div>
+
+            <h1 className="main-title text-center"> Your Cart!</h1>
+            <CartTemplate
+                cartData={cart}
+                text="Place Order"
+                link="user/order/placeOrder"
+                clearCart={() => this.clearCart()}
+                removeItem={(item) => this.removeItem(item)}
 
 
-        /> : null;
+            />
+
+        </div> : <h1 className="main-title text-center">  Cart is Empty </h1>;
 
 
     }
@@ -171,12 +176,12 @@ class ViewCart extends Component {
 
         const cart = this.state.cart;
 
-        return cart ? <div className="btn btn-main text-center" onClick={() => this.placeOrder()}> Place Order </div> : null;
+        return (!_.isEmpty(cart)) ? <div className="btn btn-main text-center" onClick={() => this.placeOrder()}> Place Orders </div> : null;
     }
 
     render() {
 
-        console.log(this.state);
+        // console.log(this.state);
         return <div>
 
             <Header />
