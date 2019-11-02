@@ -7,7 +7,7 @@
 notes.txt
 # testing
 /coverage
-
+/idea
 # production
 /build
 
