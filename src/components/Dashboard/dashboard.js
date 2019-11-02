@@ -3,63 +3,48 @@ import RestDash from "./restDashboard";
 import AdminDash from "./adminDashboard";
 import CustDash from "./custsDashBoard";
 import Header from "../Header/header";
-import "./dashboard.sass"
+import "./dashboard.sass";
 
 class DashBoard extends Component {
+  state = {
+    role: null
+  };
 
+  componentDidMount() {
+    const role = sessionStorage.getItem("role");
+    this.setState({
+      role
+    });
+  }
 
-    state = {
+  renderDash = () => {
+    const role = this.state.role;
 
-        role: null
+    if (role) {
+      switch (role) {
+        case "customer":
+          return <CustDash />;
+          break;
+        case "admin":
+          return <AdminDash {...this.props} />;
+          break;
+        case "rest":
+          return <RestDash {...this.props} />;
+          break;
+        default:
+          return null;
+      }
     }
+  };
 
-    componentDidMount() {
-
-        const role = sessionStorage.getItem("role");
-        this.setState({
-            role
-        })
-    }
-
-    renderDash = () => {
-
-        const role = this.state.role;
-
-        if (role) {
-
-            switch (role) {
-
-                case "customer":
-                    return <CustDash />
-                    break;
-                case "admin":
-                    return <AdminDash {...this.props} />
-                    break;
-                case "rest":
-                    return <RestDash {...this.props} />
-                    break;
-                default:
-                    return null;
-            }
-        }
-
-
-
-    }
-
-    render() {
-
-        return <div>
-
-            <Header />
-            <div>
-
-                {this.renderDash()}
-            </div>
-        </div>
-
-    }
+  render() {
+    return (
+      <div>
+        <Header />
+        <div>{this.renderDash()}</div>
+      </div>
+    );
+  }
 }
-
 
 export default DashBoard;

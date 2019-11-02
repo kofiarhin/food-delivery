@@ -4,11 +4,11 @@ import { BrowserRouter } from "react-router-dom";
 import Routes from "./routes";
 
 const App = () => {
-    return <BrowserRouter>
-
-        <Routes />
-
+  return (
+    <BrowserRouter>
+      <Routes />
     </BrowserRouter>
-}
+  );
+};
 
 ReactDOM.render(<App />, document.querySelector("#root"));
