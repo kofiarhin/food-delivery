@@ -64,7 +64,8 @@ class Restaurant extends Component {
     renderProfile = () => {
 
 
-        const rest = this.state.rest;
+
+        const rest = this.state.restData;
 
         return rest ?
             <div className="rest-profile-wrapper">
@@ -271,7 +272,7 @@ class Restaurant extends Component {
 
     render() {
 
-        // console.log(this.state.cart);
+        console.log(this.state);
 
         return <div className="restaurant">
 

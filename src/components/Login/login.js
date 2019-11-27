@@ -134,7 +134,7 @@ class Login extends Component {
 
               <div className="form-element">
                 <input
-                  type="text"
+                  type="password"
                   placeholder="Password"
                   onChange={event =>
                     this.handleChange({ event, id: "password", blur: false })
